@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "admin/interface.h"
+#include "server_core.h"
 
 
 #endif // FDMN_H_INCLUDED

@@ -17,16 +17,46 @@ int start_admin() {
 
 	string input;
 
-    cout << ">> ";
-	getline(cin, input);
+    while ( true ) {
+        cout << endl << ">> ";
+        getline(cin, input);
 
-	#ifdef DEBUG
-	cout << "You entered: " << input << endl;
-	#endif
+        #ifdef DEBUG
+        cout << "You entered: " << input << endl;
+        #endif
 
-	eval_input(input);
+        if ( input.compare("exit") == 0 )
+            return 0;
+
+        eval_input(input);
+    }
 
 	return 0;
+}
+
+void* start_admin(void *args) {
+	if ( !initialized ) {
+		fprintf(stderr, "Admin interface not initialized\n");
+		return NULL;
+	}
+
+	string input;
+
+    while ( true ) {
+        cout << endl << ">> ";
+        getline(cin, input);
+
+        #ifdef DEBUG
+        cout << "You entered: " << input << endl;
+        #endif
+
+        if ( input.compare("exit") == 0 )
+            return NULL;
+
+        eval_input(input);
+    }
+
+	return NULL;
 }
 
 void eval_input(string input) {
