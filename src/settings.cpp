@@ -37,3 +37,7 @@ bool cSettings::load_settings(string filename) {
     initialized = true;
     return true;
 }
+
+bool cSettings::exists(const string& section, const string& key) {
+	return ini_file->exists(section, key);
+}

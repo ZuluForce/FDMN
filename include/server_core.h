@@ -4,6 +4,10 @@
 #include "settings.h"
 #include "admin/interface.h"
 
+#define STR(x) #x
+#define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
+#define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))
+
 class cServerCore {
     private:
     	/* Utility Classes */

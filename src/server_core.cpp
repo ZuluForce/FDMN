@@ -26,7 +26,9 @@ void cServerCore::start_server() {
 	int prompt = settings->extractValue<int>("Admin", "admin_prompt");
 
 	cout << "Prompt boolean = " << prompt << endl;
-    if ( settings->extractValue<bool>("Admin", "admin_prompt") ) {
+
+    if ( INI_EXISTS(Admin, admin_prompt) &&
+		 INI_EXTRACT(Admin, admin_prompt, bool) ) {
         init_admin();
         start_admin();
     }

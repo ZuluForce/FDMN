@@ -18,6 +18,8 @@ class cSettings {
 
         bool load_settings(string filename = "");
 
+        bool exists(const string& section, const string& key);
+
         template<class T> T extractValue(const string& section, const string& key);
 };
 
