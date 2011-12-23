@@ -10,8 +10,8 @@
 
 using namespace std;
 
-#define EVAL_CASE(char) case '##char':\
-                        eval_cmd_##char(input);\
+#define EVAL_CASE(char, _char) case char:\
+                        eval_cmd_##_char(input);\
                         break;
 
 int init_admin();

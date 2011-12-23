@@ -1,5 +1,5 @@
-#ifndef CMD_A_H_INCLUDED
-#define CMD_A_H_INCLUDED
+#ifndef CMD_T_H_INCLUDED
+#define CMD_T_H_INCLUDED
 
 #include <iostream>
 #include <string>
@@ -8,6 +8,6 @@
 
 using namespace std;
 
-void eval_cmd_a(string cmd);
+void eval_cmd_t(string cmd);
 
 #endif // CMD_A_H_INCLUDED

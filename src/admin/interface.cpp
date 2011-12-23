@@ -72,37 +72,18 @@ void eval_input(string input) {
 	#endif
 
     switch ( first_char ) {
-        //VAL_CASE(a);
+    	EVAL_CASE('a',a);
+    	EVAL_CASE('t',t);
+    	/*
         case 'a':
             eval_cmd_a(input);
             break;
-        /*
-        EVAL_CASE(b);
-        EVAL_CASE(c);
-        EVAL_CASE(d);
-        EVAL_CASE(e);
-        EVAL_CASE(f);
-        EVAL_CASE(g);
-        EVAL_CASE(h);
-        EVAL_CASE(i);
-        EVAL_CASE(j);
-        EVAL_CASE(k);
-        EVAL_CASE(l);
-        EVAL_CASE(m);
-        EVAL_CASE(n);
-        EVAL_CASE(o);
-        EVAL_CASE(p);
-        EVAL_CASE(q);
-        EVAL_CASE(r);
-        EVAL_CASE(s);
-        EVAL_CASE(t);
-        EVAL_CASE(u);
-        EVAL_CASE(v);
-        EVAL_CASE(w);
-        EVAL_CASE(x);
-        EVAL_CASE(y);
-        EVAL_CASE(z);
-        */
+
+		case 't':
+			eval_cmd_t(input);
+			break;
+			*/
+
         default:
             cerr << "Invalid Command: ";
             cerr <<input.substr(0,input.find_first_of(' '));

@@ -6,7 +6,9 @@
 
 class cServerCore {
     private:
+    	/* Utility Classes */
         cSettings *settings;
+        cLog *log;
 
         cServerCore();
 
