@@ -14,8 +14,7 @@ cLog::cLog(string filename)
 : ready(false), timestamp(false), log_file(filename) {
 
 	if ( _settings ) {
-		if ( INI_EXISTS(Admin, log_timestamp) )
-			timestamp = INI_EXTRACT(Admin, log_timestamp, bool);
+		timestamp = INI_EXTRACT(Admin, log_timestamp, bool);
 
 		if ( timestamp )
 			cout << "Log timestamping enabled" << endl;

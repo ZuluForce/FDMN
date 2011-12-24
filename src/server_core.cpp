@@ -14,6 +14,8 @@ cServerCore::cServerCore(string settings_file) {
     if ( settings == NULL )
     	throw ((string) "Fatal Exception: Settings not found!");
 
+	settings->set_defaults( setDefaults );
+
     _settings = settings;
 
     log = new cLog(settings->extractValue<string>("Admin", "log_file"));
@@ -39,10 +41,8 @@ void cServerCore::start_server() {
 
 	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, network));
 
-    if ( INI_EXISTS(Admin, admin_prompt) &&
-		 INI_EXTRACT(Admin, admin_prompt, bool) ) {
+    if ( INI_EXTRACT(Admin, admin_prompt, bool) ) {
         init_admin();
-        //start_admin();
         prompt_thread = new boost::thread(start_admin);
     }
 

@@ -1,7 +1,7 @@
 ##Makefile for Frugal Distributed Media Network Server##
 
 CC=g++
-CFLAGS= -O3 -Iinclude -Ilib
+CFLAGS= -O3 -Iinclude -Ilib -D_REENTRANT
 LFLAGS = -lboost_thread
 
 SRCDIR = src
@@ -22,6 +22,10 @@ _SERVER_DEPS = $(patsubst %,$(OBJDIR)/%,$(SERVER_DEPS))
 CMD_OBJS = cmd_a.o cmd_t.o
 _CMD_OBJS = $(patsubst %,$(OBJDIR)/%, $(CMD_OBJS))
 
+MAIN_FLAGS = -DCOMP_MAIN
+
+vpath % $(BINDIR)
+
 vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/admin
 vpath %.cpp $(SRCDIR)/admin/cmd_bindings
@@ -34,7 +38,8 @@ vpath %.o $(LIBDIR)
 vpath %.o $(OBJDIR)
 
 fdmn_server: fdmn.cpp fdmn.h $(SERVER_DEPS)
-	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS) $(_CMD_OBJS) $(_LIB_OBJS) $(LFLAGS) -o $(BINDIR)/$@
+	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS)\
+	 $(_CMD_OBJS) $(_LIB_OBJS) $(LFLAGS) $(MAIN_FLAGS) -o $(BINDIR)/$@
 
 fdmn_server_debug:
 	make LIB_OBJS='iniReader_linux_x86_64_debug.o'

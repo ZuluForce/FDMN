@@ -50,7 +50,9 @@
 		<Unit filename="include/net_interface.h" />
 		<Unit filename="include/server_core.h" />
 		<Unit filename="include/settings.h" />
+		<Unit filename="include/settings/default_settings.h" />
 		<Unit filename="lib/iniReader.h" />
+		<Unit filename="settings.ini" />
 		<Unit filename="src/admin/cmd_bindings/cmd_a.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_t.cpp" />
 		<Unit filename="src/admin/interface.cpp">
