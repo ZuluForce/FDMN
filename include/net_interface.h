@@ -13,6 +13,9 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#include "logging.h"
+#include "settings.h"
+
 #define LISTEN_SIZE 5
 #define DEFAULT_RETRIES 2
 

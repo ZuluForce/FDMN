@@ -25,8 +25,10 @@ int start_admin() {
         cout << "You entered: " << input << endl;
         #endif
 
-        if ( input.compare("exit") == 0 )
+        if ( input.compare("exit") == 0 ) {
+        	kill(getpid(), SIGINT);
             return 0;
+        }
 
         eval_input(input);
     }
@@ -50,8 +52,10 @@ void* start_admin(void *args) {
         cout << "You entered: " << input << endl;
         #endif
 
-        if ( input.compare("exit") == 0 )
+        if ( input.compare("exit") == 0 ) {
+        	kill(getpid(),SIGINT);
             return NULL;
+        }
 
         eval_input(input);
     }

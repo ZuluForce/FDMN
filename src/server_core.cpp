@@ -19,20 +19,32 @@ cServerCore::cServerCore(string settings_file) {
     log = new cLog(settings->extractValue<string>("Admin", "log_file"));
     _log = log;
 
+    /* Start up network */
+    network = new cNetInterface(INI_EXTRACT(Network , port, int));
+
     return;
 }
 
-void cServerCore::start_server() {
-	int prompt = settings->extractValue<int>("Admin", "admin_prompt");
+cServerCore::~cServerCore() {
+	return;
+}
 
-	cout << "Prompt boolean = " << prompt << endl;
+void cServerCore::cleanup() {
+	/* Cleanup threads and data */
+	delete log;
+	return;
+}
+
+void cServerCore::start_server() {
+
+	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, network));
 
     if ( INI_EXISTS(Admin, admin_prompt) &&
 		 INI_EXTRACT(Admin, admin_prompt, bool) ) {
         init_admin();
-        start_admin();
+        //start_admin();
+        prompt_thread = new boost::thread(start_admin);
     }
 
-	log->log_simple("Shutting down server");
     return;
 }

@@ -2,6 +2,7 @@
 
 CC=g++
 CFLAGS= -O3 -Iinclude -Ilib
+LFLAGS = -lboost_thread
 
 SRCDIR = src
 INCDIR = include
@@ -15,7 +16,7 @@ _LIB_OBJS = $(patsubst %,$(LIBDIR)/%, $(LIB_OBJS))
 LIB_OBJS_WIN = iniReader_win_x86_64.o
 _LIB_OBJS_WIN = $(patsubst %,$(LIBDIR)/%, $(LIB_OBJS_WIN))
 
-SERVER_DEPS = interface.o server_core.o settings.o logging.o
+SERVER_DEPS = interface.o server_core.o settings.o logging.o net_interface.o
 _SERVER_DEPS = $(patsubst %,$(OBJDIR)/%,$(SERVER_DEPS))
 
 CMD_OBJS = cmd_a.o cmd_t.o
@@ -33,7 +34,7 @@ vpath %.o $(LIBDIR)
 vpath %.o $(OBJDIR)
 
 fdmn_server: fdmn.cpp fdmn.h $(SERVER_DEPS)
-	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS) $(_CMD_OBJS) $(_LIB_OBJS) -o $(BINDIR)/$@
+	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS) $(_CMD_OBJS) $(_LIB_OBJS) $(LFLAGS) -o $(BINDIR)/$@
 
 fdmn_server_debug:
 	make LIB_OBJS='iniReader_linux_x86_64_debug.o'
