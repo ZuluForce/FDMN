@@ -17,6 +17,7 @@ class cSettings {
         ~cSettings();
 
         bool load_settings(string filename = "");
+        void set_defaults(void (*default_fn) (INIReader*));
 
         bool exists(const string& section, const string& key);
 

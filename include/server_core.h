@@ -9,6 +9,11 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
+/* Conditional Includes */
+#ifndef COMP_MAIN
+#include "settings/default_settings.h"
+#endif
+
 #define STR(x) #x
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
 #define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))

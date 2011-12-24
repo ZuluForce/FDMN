@@ -17,6 +17,9 @@ class INIReader;
 typedef map<string,KeyRecord> KeyMap;
 typedef map<string,KeyMap> SectionMap;
 
+typedef map<string,string> DefaultKeyMap;
+typedef map<string,DefaultKeyMap> DefaultMap;
+
 /* Option masks for INIReader */
 #define MASK(x) (1 << x)        //Puts the bit in the correct location for the mask
 #define INI_ALL = 0xFFFFFFFF;
@@ -81,6 +84,12 @@ class INIReader {
 
         KeyMap* temp_map;
 
+        DefaultMap default_map;
+        DefaultMap::iterator def_sec_it;
+        DefaultKeyMap::iterator def_key_it;
+
+        DefaultKeyMap *def_temp_map;
+
         //Loads the sections and (key,value) pairs from the ini file
         void parse_ini();
 
@@ -92,6 +101,7 @@ class INIReader {
 
         string& getKeyValue(const string& section, const string& key);
         string& getKeyComment(const string& section, const string& key);
+        string& getDefault(const string& section, const string& key);
         static void strip_white_space(string& str, const string& TrimChars = " \t\n\r", int TrimDir = 0);
 
     public:
@@ -102,6 +112,7 @@ class INIReader {
         bool exists(const string& section, const string& key);
 
         /* Manipulators */
+        void addDefault(const string& section, const string& key, const string& value);
         template<class T> T extractValue(const string& section, const string& key);
 
         string extractComment(const string& section, const string& key);

@@ -38,6 +38,10 @@ bool cSettings::load_settings(string filename) {
     return true;
 }
 
+void cSettings::set_defaults(void (*default_fn) (INIReader *ini)) {
+	if ( default_fn ) default_fn( ini_file );
+}
+
 bool cSettings::exists(const string& section, const string& key) {
 	return ini_file->exists(section, key);
 }
