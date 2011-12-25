@@ -77,16 +77,10 @@ void eval_input(string input) {
 
     switch ( first_char ) {
     	EVAL_CASE('a',a);
+    	EVAL_CASE('c',c);
+    	EVAL_CASE('l',l);
+    	EVAL_CASE('s',s);
     	EVAL_CASE('t',t);
-    	/*
-        case 'a':
-            eval_cmd_a(input);
-            break;
-
-		case 't':
-			eval_cmd_t(input);
-			break;
-			*/
 
         default:
             cerr << "Invalid Command: ";

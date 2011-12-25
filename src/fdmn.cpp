@@ -2,7 +2,7 @@
 
 extern cLog *_log;
 
-static cServerCore *_core;
+cServerCore *_core;
 
 void exit_handler(int signum) {
 	if ( signum != SIGINT ) {

@@ -13,9 +13,10 @@ void eval_cmd_t(string cmd) {
         return;
     }
 
-    cerr << "Invalid Command: ";
-    cerr << cmd_name;
-    cerr << endl;
+	cerr << "Invalid Command: ";
+	cerr << cmd.substr(0,cmd.find_first_of(' '));
+	cerr << endl;
+
 
     return;
 }

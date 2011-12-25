@@ -62,25 +62,23 @@ void cLog::log_simple(string message) {
 	if ( !ready )
 		return;
 
-	/*
-	if ( pthread_mutex_lock( &write_lock ) == -1 ) {
-		cerr << "cLog::log_simple() Failed to acquire write lock" << endl;
-		return;
-	}
-	*/
+	/* Add Mutex Locks */
 
 	insert_time();
 	log_stream << "[" << message << "]" << endl;
 
-	/*
-	if ( pthread_mutex_lock( &write_lock ) == -1 ) {
-		cerr << "cLog::log_simple() Failed to release write lock" << endl;
-		cerr << "\tDisabling logging to possibly prevent deadlock" << endl;
+	/* Add Mutex Locks */
 
-		ready = false;
-		pthread_mutex_destroy( &write_lock );
-	}
-	*/
+	return;
+}
+
+void cLog::log_block_msg(string message) {
+
+	write_lock.lock();
+
+	log_stream << message << endl;
+
+	write_lock.unlock();
 
 	return;
 }

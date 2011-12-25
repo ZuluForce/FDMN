@@ -19,7 +19,7 @@ _LIB_OBJS_WIN = $(patsubst %,$(LIBDIR)/%, $(LIB_OBJS_WIN))
 SERVER_DEPS = interface.o server_core.o settings.o logging.o net_interface.o
 _SERVER_DEPS = $(patsubst %,$(OBJDIR)/%,$(SERVER_DEPS))
 
-CMD_OBJS = cmd_a.o cmd_t.o
+CMD_OBJS = cmd_a.o cmd_c.o cmd_l.o cmd_s.o cmd_t.o
 _CMD_OBJS = $(patsubst %,$(OBJDIR)/%, $(CMD_OBJS))
 
 MAIN_FLAGS = -DCOMP_MAIN
@@ -61,4 +61,5 @@ run_server_win: fdmn_server_win
 
 clean:
 	rm -f $(BINDIR)/fdmn_server
-	rm $(OBJDIR)/*.o
+	rm -f $(OBJDIR)/*.o
+	clear

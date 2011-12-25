@@ -8,6 +8,8 @@
 #include <iostream>
 #include <fstream>
 
+#include <boost/thread/mutex.hpp>
+
 #include "settings.h"
 
 #define STR(x) #x
@@ -31,7 +33,7 @@ class cLog {
 		ofstream log_stream;
 
 		/* Locking for multiple threads */
-		//pthread_mutex_lock write_lock = PTHREAD_MUTEX_INITIALIZER;
+		boost::timed_mutex write_lock;
 
 		void insert_time();
 
@@ -42,6 +44,7 @@ class cLog {
 		~cLog();
 
 		void log_simple(string message);
+		void log_block_msg(string block_msg);
 
 		void toggle_time(bool setting);
 

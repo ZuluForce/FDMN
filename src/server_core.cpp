@@ -38,6 +38,7 @@ void cServerCore::cleanup() {
 }
 
 void cServerCore::start_server() {
+	time( &start_time );
 
 	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, network));
 
@@ -47,4 +48,24 @@ void cServerCore::start_server() {
     }
 
     return;
+}
+
+void cServerCore::status(uint32_t flags, bool log) {
+	stringstream stream;
+	stream << "Sever Status Information:" << endl;
+
+	if ( flags & SF_UPTIME ) {
+		time_t curr_time;
+		time( &curr_time );
+		stream << "Uptime: " << difftime(curr_time,start_time) << endl;
+	}
+	if ( flags & SF_NETWORK ) {
+		network->status(stream);
+	}
+
+	if ( log )
+		_log->log_block_msg(stream.str());
+
+	cout << stream.str();
+	return;
 }

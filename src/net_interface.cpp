@@ -107,3 +107,47 @@ void cNetInterface::start_listening() {
 
 	return;
 }
+
+/* Required Server Module Functions */
+void cNetInterface::status(stringstream &stream) {
+	stream << "Network Information:" << endl;
+
+	struct ifaddrs *addrs;
+	struct ifaddrs *ifa;
+	void *temp_addr;
+
+	getifaddrs(&addrs);
+
+	char addr4_buffer[INET_ADDRSTRLEN];
+	char addr6_buffer[INET6_ADDRSTRLEN];
+
+	for ( ifa = addrs; ifa != NULL; ifa = ifa->ifa_next) {
+		if ( ifa->ifa_addr->sa_family == AF_INET) {
+			stream << "\t" << ifa->ifa_name << "(";
+			stream << "IPv4): ";
+
+			temp_addr = &((struct sockaddr_in*) ifa->ifa_addr)->sin_addr;
+			inet_ntop(AF_INET, temp_addr, addr4_buffer, INET_ADDRSTRLEN);
+			stream << addr4_buffer << endl;
+		} else {
+			//stream << "\t" << ifa->ifa_name << "(";
+			/*
+			stream << "IPv6): ";
+
+			temp_addr = &((struct sockaddr_in6*) ifa->ifa_addr)->sin6_addr;
+			inet_ntop(AF_INET6, temp_addr, addr6_buffer, INET6_ADDRSTRLEN);
+			stream << addr6_buffer << endl;
+			*/
+		}
+	}
+
+	stream << "\tServer Port: " << ntohs(server_addr.sin_port) << endl;
+
+	return;
+}
+
+void cNetInterface::cleanup() {
+
+	close(sock);
+	return;
+}
