@@ -11,7 +11,6 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
-/* Conditional Includes */
 #include "settings/default_settings.h"
 
 #define STR(x) #x
