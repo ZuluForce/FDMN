@@ -143,6 +143,7 @@ void cNetInterface::status(stringstream &stream) {
 
 	stream << "\tServer Port: " << ntohs(server_addr.sin_port) << endl;
 
+	freeifaddrs( addrs );
 	return;
 }
 

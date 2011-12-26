@@ -37,6 +37,10 @@ void server_status(string cmd) {
 				sflags |= SF_NETWORK;
 				break;
 
+			case 's':
+				sflags |= SF_SETTINGS;
+				break;
+
 			case 'u':
 				sflags |= SF_UPTIME;
 				break;
@@ -49,7 +53,11 @@ void server_status(string cmd) {
 
 		}
 
-		opt_index = cmd.find_first_of('-', opt_index + 1);
+		//Find next argument. If the next character isn't a space, assume it is a combined arg
+		if ( ((++opt_index + 1) < str_size) && (cmd[opt_index + 1] != ' ') )
+			continue;
+		else
+			opt_index = cmd.find_first_of('-', opt_index + 1);
 	}
 
 	if ( sflags == 0x0 ) {

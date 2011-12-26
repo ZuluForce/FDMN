@@ -10,7 +10,7 @@ void exit_handler(int signum) {
 		return;
 	}
 
-	cerr << "Exiting the server" << endl;
+	cerr << endl << "Exiting the server" << endl;
 	_log->log_simple("Exiting the server");
 
 	_core->cleanup();

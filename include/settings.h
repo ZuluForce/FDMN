@@ -2,9 +2,11 @@
 #define SETTINGS_H_INCLUDED
 
 #include <string>
+#include <sstream>
 #include "iniReader.h"
+#include "core_classes.h"
 
-class cSettings {
+class cSettings : public cCoreModule {
     private:
         bool initialized;
         INIReader *ini_file;
@@ -22,6 +24,11 @@ class cSettings {
         bool exists(const string& section, const string& key);
 
         template<class T> T extractValue(const string& section, const string& key);
+
+        /* Function from cCoreModule */
+        void status(stringstream &stream);
+        void status_all(stringstream &stream);
+        void cleanup();
 };
 
 template<class T>

@@ -45,8 +45,10 @@
 		<Unit filename="include/admin/cmd_bindings/cmd_a.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_c.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_l.h" />
+		<Unit filename="include/admin/cmd_bindings/cmd_s.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_t.h" />
 		<Unit filename="include/admin/interface.h" />
+		<Unit filename="include/core_classes.h" />
 		<Unit filename="include/fdmn.h" />
 		<Unit filename="include/file_management/mounts.h" />
 		<Unit filename="include/logging.h" />
@@ -59,10 +61,12 @@
 		<Unit filename="src/admin/cmd_bindings/cmd_a.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_c.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_l.cpp" />
+		<Unit filename="src/admin/cmd_bindings/cmd_s.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_t.cpp" />
 		<Unit filename="src/admin/interface.cpp">
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="src/core_classes.cpp" />
 		<Unit filename="src/fdmn.cpp">
 			<Option target="Release" />
 		</Unit>

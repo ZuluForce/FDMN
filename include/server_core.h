@@ -12,6 +12,7 @@
 #include <boost/bind.hpp>
 
 #include "settings/default_settings.h"
+#include "utility.h"
 
 #define STR(x) #x
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))

@@ -45,3 +45,27 @@ void cSettings::set_defaults(void (*default_fn) (INIReader *ini)) {
 bool cSettings::exists(const string& section, const string& key) {
 	return ini_file->exists(section, key);
 }
+
+void cSettings::status(stringstream &stream) {
+	stream << "Settings Information:" << endl;
+
+	//Need to add a wway to get the real name
+	stream << "\tLoaded .ini file: " << "settings.ini";
+	stream << endl;
+
+}
+
+void cSettings::status_all(stringstream &stream) {
+	stream << "Settings Information:";
+
+	stream << "\tLoaded .ini file: " << "settings.ini";
+	stream << endl;
+
+	/* Display settings from each section
+	stream << "Admin Section: " << endl;
+	*/
+}
+
+void cSettings::cleanup() {
+	delete ini_file;
+}
