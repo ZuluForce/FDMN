@@ -27,6 +27,7 @@ void server_status(string cmd) {
 			case 'a':
 				sflags = SF_ALL;
 				log = true;
+				_core->status(sflags,log);
 				return;
 
 			case 'l':

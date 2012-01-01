@@ -24,7 +24,7 @@ enum {
 	SF_LOG = SF_NETWORK << 1,
 	SF_SETTINGS = SF_LOG << 1,
 	SF_ALL_SETTINGS = SF_SETTINGS << 1,
-	SF_UPTIME = SF_ALL_SETTINGS << 1,
+	SF_UPTIME = SF_ALL_SETTINGS << 1
 };
 
 class cServerCore {
