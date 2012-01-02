@@ -40,7 +40,7 @@ T cSettings::extractValue(const string& section, const string& key) {
 template<class T>
 T cSettings::extractDefault(const string& section, const string& key) {
 	stringstream stream;
-	stream << ini_file->getDefault
+	stream << ini_file->getDefault(section, key);
 
 	T ret_val;
 	stream >> ret_val;

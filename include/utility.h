@@ -32,7 +32,12 @@ typedef struct ts_queue {
 	queue_t **data;
 } ts_queue;
 
-typedef queue_t void;
+//typedef queue_t void;
+
+struct queue_t {
+	int fd;
+	int id;
+}
 
 /* ------- Regular Thread-Safe Queue ----------- */
 ts_queue* init_queue(int);

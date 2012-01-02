@@ -168,6 +168,17 @@ cFDMNProtocol::cFDMNProtocol() {
 
 	initQueue();
 
+	wait_enqueue = (bool) INI_EXTRACT(Network,WaitEnqueue,int);
+	max_threads = (bool) INI_EXTRACT(Network, MaxNetThreads,int);
+
+	if ( max_threads < 1 ) {
+		_log->log_simple("Error: MaxNetThreads < 1");
+
+		cerr << "Error: MaxNetThreads < 1" << endl;
+		max_threads = _settings->extractDefault<int>("Network","MaxNetThreads");
+		cerr << "\tUsing Default MaxNetThreads = " << max_threads << endl;
+	}
+
 	return;
 }
 
@@ -198,19 +209,44 @@ void cFDMNProtocol::initQueue() {
 }
 
 void cFDMNProtocol::startThreads() {
-	int num_threads = INI_EXTRACT(Network,MaxNetThreads,int);
+	listen_threads.reserve( sizeof(boost::thread*) * max_threads);
 
-	if ( num_threads < 1 ) {
-		_log->log_simple("Error: MaxNetThreads < 1");
+	for ( int i = 0; i < max_threads; ++i) {
+		listen_threads[i] = new boost::thread(boost::bind( &cFDMNProtocol::listen, this) );
+	}
 
-		cerr << "Error: MaxNetThreads < 1" << endl;
-		num_threads = _settings->extractDefault<int>("Network","MaxNetThreads");
-		cerr << "\tUsing Default MaxNetThreads = " << num_threads << endl;
+	return;
+}
+
+void cFDMNProtocol::listen() {
+	stringstream log_stream;
+	queue_t *msg;
+
+	while ( true ) {
+		msg = rm_queue(msg_queue);
+
+		log_stream.clear()
+		log_stream << "Listener thread: " << boost::this_thread::get_id();
+		log_stream << " Received msg: " << msg->id << endl;
+		_log->log_simple(log_stream.str());
+
+		status_lock.lock();
+		++msg_received; //Should be moved to the top
+		++msg_serviced;
+		status_lock.unlock();
 	}
 }
 
 void cFDMNProtocol::addMsg(int client_fd) {
-	add_queue((queue_t*) msg, msg_queue);
+	queue_t *new_msg = (queue_t*) malloc( sizeof(queue_t) );
+	new_msg->fd = client_fd;
+	new_msg->id = msg_ids.ID_getid_ts();
+	if ( new_msg->id < 0 ) {
+		_log->log_simple("Fatal Error: cFDMNProtocol ran out of msg ids");
+		throw ((string) "Fatal Error: cFDMNProtocol ran out of msg ids");
+	}
+
+	add_queue( new_msg, msg_queue );
 
 	return;
 }

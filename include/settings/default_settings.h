@@ -11,6 +11,7 @@ inline void setDefaults(INIReader *ini) {
 	ADD(Admin,admin_prompt,1);
 	ADD(Admin,log_file,log.txt);
 	ADD(Admin,log_timestamp,1);
+	ADD(Admin,verbosity,5);
 
 	/* Formatting */
 	ADD(Format,time_style,1);
@@ -19,6 +20,7 @@ inline void setDefaults(INIReader *ini) {
 	ADD(Network,port,9000);
 	ADD(Network,MaxNetThreads,4);
 	ADD(Network,MsgQueueSize,10);
+	ADD(Network,WaitEnqueue,1);
 }
 
 #endif // DEFAULT_SETTINGS_H_INCLUDED

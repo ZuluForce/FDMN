@@ -16,6 +16,7 @@
 #include <ifaddrs.h> //For reporting ip addresses
 
 #include <boost/thread.hpp>
+#include <boost/thread/mutex.hpp>
 
 #include "logging.h"
 #include "settings.h"
@@ -65,9 +66,16 @@ class cFDMNProtocol: public cProtocol, cCoreModule {
 		ts_queue* msg_queue;
 		cID_dispatch msg_ids;
 
+		vector<boost::thread*> listen_threads;
+
 		/* Status Information */
+		boost::mutex status_lock;
 		unsigned long msg_received;
 		unsigned long msg_serviced;
+
+		/* Opitons (loaded on construction) */
+		bool wait_enqueue;
+		int max_threads;
 
 	public:
 		cProtocolHandler();
@@ -75,6 +83,7 @@ class cFDMNProtocol: public cProtocol, cCoreModule {
 
 		void initQueue();
 		void startThreads();
+		void listen();
 
 		/* Implementations from cProtocol Class */
 		void addMsg(int);
