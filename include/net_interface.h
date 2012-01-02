@@ -15,8 +15,11 @@
 #include <netdb.h>
 #include <ifaddrs.h> //For reporting ip addresses
 
+#include <boost/thread.hpp>
+
 #include "logging.h"
 #include "settings.h"
+#include "utility.h"
 
 #include "core_classes.h"
 
@@ -26,6 +29,14 @@
 #define STR(x) #x
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
 #define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))
+
+class cProtocol {
+	public:
+		cProtocol();
+		~cProtocol();
+
+		virtual void addMsg(int) = 0;
+};
 
 class cNetInterface: public cCoreModule {
 	private:
@@ -42,11 +53,34 @@ class cNetInterface: public cCoreModule {
 		~cNetInterface();
 
 		void init_net(int port);
-		void start_listening();
+		void start_listening(cProtocol&);
 
 		void status(stringstream& stream);
 		void cleanup();
 
+};
+
+class cFDMNProtocol: public cProtocol, cCoreModule {
+	private:
+		ts_queue* msg_queue;
+		cID_dispatch msg_ids;
+
+		/* Status Information */
+		unsigned long msg_received;
+		unsigned long msg_serviced;
+
+	public:
+		cProtocolHandler();
+		~cProtocolHandler();
+
+		void initQueue();
+		void startThreads();
+
+		/* Implementations from cProtocol Class */
+		void addMsg(int);
+
+		void status(stringstream& stream);
+		void cleanup();
 };
 
 #endif // NET_INTERFACE_H_INCLUDED

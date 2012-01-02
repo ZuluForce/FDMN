@@ -24,6 +24,7 @@ class cSettings : public cCoreModule {
         bool exists(const string& section, const string& key);
 
         template<class T> T extractValue(const string& section, const string& key);
+        template<class T> T extractDefault(const string& section, const string& key);
 
         /* Function from cCoreModule */
         void status(stringstream &stream);
@@ -36,4 +37,13 @@ T cSettings::extractValue(const string& section, const string& key) {
     return ini_file->extractValue<T>(section, key);
 }
 
+template<class T>
+T cSettings::extractDefault(const string& section, const string& key) {
+	stringstream stream;
+	stream << ini_file->getDefault
+
+	T ret_val;
+	stream >> ret_val;
+	return ret_val;
+}
 #endif // SETTINGS_H_INCLUDED

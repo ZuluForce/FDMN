@@ -17,6 +17,8 @@ inline void setDefaults(INIReader *ini) {
 
 	/* Section Network */
 	ADD(Network,port,9000);
+	ADD(Network,MaxNetThreads,4);
+	ADD(Network,MsgQueueSize,10);
 }
 
 #endif // DEFAULT_SETTINGS_H_INCLUDED

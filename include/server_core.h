@@ -34,6 +34,7 @@ class cServerCore {
 
     	/* Utility Classes */
     	cNetInterface *network;
+    	cFDMNProtocol *protocol;
         cSettings *settings;
         cLog *log;
 

@@ -73,17 +73,18 @@ void cNetInterface::init_net(int port) {
 	return;
 }
 
-void cNetInterface::start_listening() {
+void cNetInterface::start_listening(cProtocol &_protocol) {
 	sockaddr_in client;
 	int failed_attempts = 0;
 
 	int client_sz = sizeof(client);
+	int client_fd;
 
     string msg;
 
 	while ( failed_attempts <= max_retries ) {
-		if ( accept(sock, (sockaddr*) &client,
-					(socklen_t*) &client_sz) == -1) {
+		if ( (client_fd = accept(sock, (sockaddr*) &client,
+					(socklen_t*) &client_sz)) == -1) {
 
 			perror("Error waiting for network connection");
 
@@ -103,6 +104,9 @@ void cNetInterface::start_listening() {
 		msg += inet_ntoa(client.sin_addr);
 
 		_log->log_simple( msg );
+
+		/* Send msg to protocol handler */
+
 	}
 
 	return;
@@ -130,6 +134,7 @@ void cNetInterface::status(stringstream &stream) {
 			inet_ntop(AF_INET, temp_addr, addr4_buffer, INET_ADDRSTRLEN);
 			stream << addr4_buffer << endl;
 		} else {
+			/* This will display IPV6 info but it doesn't look nice */
 			//stream << "\t" << ifa->ifa_name << "(";
 			/*
 			stream << "IPv6): ";
@@ -150,5 +155,78 @@ void cNetInterface::status(stringstream &stream) {
 void cNetInterface::cleanup() {
 
 	close(sock);
+	return;
+}
+
+
+
+/* FDMN Protocol Class */
+
+cFDMNProtocol::cFDMNProtocol() {
+	msg_received = 0;
+	msg_serviced = 0;
+
+	initQueue();
+
+	return;
+}
+
+cFDMNProtocol::~cFDMNProtocol() {
+
+	return;
+}
+
+void cFDMNProtocol::initQueue() {
+	int queue_size = INI_EXTRACT(Network,MsgQueueSize,int);
+
+	if ( queue_size < 1 ) {
+		cerr << "Error: MsgQueueSize < 1" << endl;
+		queue_size = _settings->extractDefault<int>("Network", "MsgQueueSize");
+		cerr << "\tReverting to default: " << queue_size << endl;
+
+		_log->log_simple("Error: MsgQueueSize < 1");
+	}
+
+	msg_queue = init_queue(queue_size);
+
+	if ( msg_queue == NULL ) {
+		_log->log_simple("Fatal Error: Failed to create msg queue");
+		throw ((string) "Fatal Error: Failed to create msg queue");
+	}
+
+	return;
+}
+
+void cFDMNProtocol::startThreads() {
+	int num_threads = INI_EXTRACT(Network,MaxNetThreads,int);
+
+	if ( num_threads < 1 ) {
+		_log->log_simple("Error: MaxNetThreads < 1");
+
+		cerr << "Error: MaxNetThreads < 1" << endl;
+		num_threads = _settings->extractDefault<int>("Network","MaxNetThreads");
+		cerr << "\tUsing Default MaxNetThreads = " << num_threads << endl;
+	}
+}
+
+void cFDMNProtocol::addMsg(int client_fd) {
+	add_queue((queue_t*) msg, msg_queue);
+
+	return;
+}
+
+void cFDMNProtocol::status(stringstream &stream) {
+	stream << "Protocol Handler:" << endl;
+	stream << "\tMsg Received: " << msg_received << endl;
+	stream << "\tMsg Serviced: " << msg_serviced << endl;
+	stream << endl;
+
+	return;
+}
+
+void cFDMNProtocol::cleanup() {
+	/* Need to free the array inide the queue. To add */
+	free(msg_queue);
+
 	return;
 }
