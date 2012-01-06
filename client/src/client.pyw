@@ -1,14 +1,16 @@
-import sys
+import sys, fdmn_protocol
 
 from PyQt4 import QtGui, QtCore, Qt
 
 version = '0.0.1'
+default_port = '9000'
 
 
 class ClientWindow(QtGui.QMainWindow):
     def __init__(self):
         super(ClientWindow,self).__init__()
-            
+        self.fdmn_sock = fdmn_protocol.FDMN_Protocol()
+        
         self.initWindow()
         
     def initWindow(self):
@@ -21,20 +23,22 @@ class ClientWindow(QtGui.QMainWindow):
         self.createMenu()
 
         ##Create Toolbar##
-        self.createToolbar
+        self.createToolbar()
+
+        ##Create Statusbar##
+        self.createStatusbar()
 
         ##Server Address Field##
         addrLabel = QtGui.QLabel('Server:',self.mainWidget)
-        addrEdit = QtGui.QLineEdit(self.mainWidget)
+        self.addrEdit = QtGui.QLineEdit(self.mainWidget)
+
+        portLabel = QtGui.QLabel('Port:',self.mainWidget)
+        self.portEdit = QtGui.QLineEdit(self.mainWidget)
+        self.portEdit.setText(default_port)
 
         ##Connect Button
         connectButton = QtGui.QPushButton('Connect', self.mainWidget)
-
-        connectMenu = QtGui.QMenu()
-
-        discAction = QtGui.QAction('Disconnect', self.mainWidget)
-        connectMenu.addAction(discAction)
-        connectButton.setMenu(connectMenu)
+        QtCore.QObject.connect(connectButton,QtCore.SIGNAL('clicked()'), self.connectEvent)
 
         ##Create Calendar (Test)##
         calendar = QtGui.QCalendarWidget(self.mainWidget)
@@ -46,9 +50,15 @@ class ClientWindow(QtGui.QMainWindow):
 
         ##Add Widgets to Grid##
         grid.setColumnMinimumWidth(1,100)
+        
         grid.addWidget(addrLabel, 0, 0)
-        grid.addWidget(addrEdit, 0, 1)
-        grid.addWidget(connectButton, 0, 3)
+        grid.addWidget(self.addrEdit, 0, 1)
+        grid.setColumnStretch(1,1)
+        
+        grid.addWidget(portLabel, 0, 3)
+        grid.addWidget(self.portEdit, 0, 4)
+        
+        grid.addWidget(connectButton, 0, 5)
         grid.addWidget(calendar, 1, 0, 5,5)
 
         self.mainWidget.setLayout(grid)
@@ -82,6 +92,11 @@ class ClientWindow(QtGui.QMainWindow):
         self.toolbar.addAction(self.exitAction)
         return
 
+    def createStatusbar(self):
+        self.status = self.statusBar()
+        self.status.showMessage("Ready to Connect to a Server")
+        self.fdmn_sock.SetStatusHook(self.status.showMessage)
+
     def closeEvent(self, event):
         reply = QtGui.QMessageBox.question(self, 'Message',
                                         "Are you sure to quit?", QtGui.QMessageBox.Yes |
@@ -92,22 +107,19 @@ class ClientWindow(QtGui.QMainWindow):
         else:
             event.ignore()
 
-    def closeButtonEvent(self, event):
-        reply = QtGui.QMessageBox.question(self, 'Message',
-                                        "Are you sure to quit?", QtGui.QMessageBox.Yes |
-                                        QtGui.QMessageBox.No, QtGui.QMessageBox.No)
+    def connectEvent(self):
+        if self.fdmn_sock.connected:
+            self.fdmn_sock.disconnect()
 
-        if reply == QtGui.QMessageBox.Yes:
-            QtCore.QCoreApplication.instance().quit()
-        else:
-            event.ignore()
+        addr = self.addrEdit.text()
+        port = self.portEdit.text()
+        print("Trying to connect to %s at port %s" % (addr,port))
 
+        self.fdmn_sock.connect_to(addr,port)
+        return
 
-    def center(self):
-        qr = self.frameGeometry()
-        cp = QtGui.QDesktopWidget().availableGeometry().center()
-        qr.moveCenter(cp)
-        self.move(qr.topLeft())
+    def StatusError(self,ErrTuple):
+        self.status.showMessage(ErrTuple[1][1])
 
 
 def about():
