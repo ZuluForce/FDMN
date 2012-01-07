@@ -78,8 +78,8 @@ class cFDMNProtocol: public cProtocol, cCoreModule {
 		int max_threads;
 
 	public:
-		cProtocolHandler();
-		~cProtocolHandler();
+		cFDMNProtocol();
+		~cFDMNProtocol();
 
 		void initQueue();
 		void startThreads();
