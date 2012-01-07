@@ -7,7 +7,7 @@
 #include <sstream>
 #include <limits.h>
 
-#include <boost/thread/mutex.h>
+#include <boost/thread/mutex.hpp>
 
 #define SEC_PER_YEAR 31536000
 #define SEC_PER_DAY 86400
@@ -18,6 +18,10 @@ using namespace std;
 
 string sec_to_time(int seconds, int style = 0);
 
+struct queue_t {
+	int fd;
+	int id;
+};
 
 typedef struct ts_queue {
 	boost::mutex q_lock;
@@ -31,13 +35,6 @@ typedef struct ts_queue {
 
 	queue_t **data;
 } ts_queue;
-
-//typedef queue_t void;
-
-struct queue_t {
-	int fd;
-	int id;
-}
 
 /* ------- Regular Thread-Safe Queue ----------- */
 ts_queue* init_queue(int);

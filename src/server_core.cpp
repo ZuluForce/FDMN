@@ -42,7 +42,7 @@ void cServerCore::start_server() {
 	time( &start_time );
 
 	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, network));
-	protocol
+	//protocol
 
     if ( INI_EXTRACT(Admin, admin_prompt, bool) ) {
         init_admin();
