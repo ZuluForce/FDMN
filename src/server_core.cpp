@@ -24,6 +24,8 @@ cServerCore::cServerCore(string settings_file) {
     /* Start up network */
     network = new cNetInterface(INI_EXTRACT(Network , port, int));
     protocol = new cFDMNProtocol();
+    protocol->initQueue();
+    network->set_protocol(protocol);
 
     return;
 }
@@ -35,6 +37,8 @@ cServerCore::~cServerCore() {
 void cServerCore::cleanup() {
 	/* Cleanup threads and data */
 	delete log;
+	delete settings;
+	delete protocol;
 	return;
 }
 
@@ -42,6 +46,7 @@ void cServerCore::start_server() {
 	time( &start_time );
 
 	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, boost::ref(network)));
+	protocol->startThreads();
 
     if ( INI_EXTRACT(Admin, admin_prompt, bool) ) {
         init_admin();
@@ -65,6 +70,7 @@ void cServerCore::status(uint32_t flags, bool log) {
 	}
 	if ( flags & SF_NETWORK ) {
 		network->status(stream);
+		protocol->status(stream);
 	}
 	if ( flags & SF_SETTINGS ) {
 		settings->status(stream);

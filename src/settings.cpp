@@ -20,6 +20,10 @@ cSettings::cSettings(string filename) {
     return;
 }
 
+cSettings::~cSettings() {
+	return;
+}
+
 bool cSettings::load_settings(string filename) {
     if ( ini_file == NULL) {
         ini_file = new INIReader(filename);
