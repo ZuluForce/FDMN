@@ -7,13 +7,16 @@
 #include <sstream>
 #include <limits.h>
 
-#include <boost/thread/mutex.hpp>
-#include <boost/thread/condition_variable.hpp>
+#include <pthread.h>
+//#include <boost/thread/mutex.hpp>
+//#include <boost/thread/condition_variable.hpp>
 
 #define SEC_PER_YEAR 31536000
 #define SEC_PER_DAY 86400
 #define SEC_PER_HOUR 3600
 #define SEC_PER_MIN 60
+
+#define STR(x) #x
 
 using namespace std;
 
@@ -25,9 +28,9 @@ struct queue_t {
 };
 
 typedef struct ts_queue {
-	boost::mutex q_lock;
-	boost::condition_variable q_full;
-	boost::condition_variable q_empty;
+	pthread_mutex_t q_lock;
+	pthread_cond_t q_full;
+	pthread_cond_t q_empty;
 
     int size;
     int slots_available;
@@ -61,7 +64,7 @@ typedef class cID_dispatch {
         int recent_ID;
         node* free_buffer;
 
-        boost::mutex ID_lock;
+        pthread_mutex_t ID_lock;
 
     public:
         cID_dispatch();

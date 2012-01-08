@@ -18,16 +18,19 @@
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 
+struct packet; //So inclusion of reqest_mappings works
+
 #include "logging.h"
 #include "settings.h"
 #include "utility.h"
+#include "network/request_mappings.h"
 
 #include "core_classes.h"
 
 #define LISTEN_SIZE 5
 #define DEFAULT_RETRIES 2
 
-#define STR(x) #x
+//#define STR(x) #x
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
 #define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))
 
@@ -64,8 +67,18 @@ class cNetInterface: public cCoreModule {
 
 };
 
+struct packet {
+	int client_fd;
+	char *request;
+
+	//Usually casted to some struct type
+	void *extra_data;
+};
+
 class cFDMNProtocol: public cProtocol, cCoreModule {
 	private:
+		static const char* version() { return "0.1"; };
+
 		ts_queue* msg_queue;
 		cID_dispatch msg_ids;
 
@@ -80,9 +93,13 @@ class cFDMNProtocol: public cProtocol, cCoreModule {
 		bool wait_enqueue;
 		int max_threads;
 
+		/* Mapping for requests */
+		map<string, void (*)(packet*)> req_map;
+
 	public:
 		cFDMNProtocol();
 		~cFDMNProtocol();
+		void init_mappings();
 
 		void initQueue();
 		void startThreads();

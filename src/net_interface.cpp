@@ -26,6 +26,7 @@ cNetInterface::cNetInterface(int port) {
 	} else {
 		max_retries = DEFAULT_RETRIES;
 	}
+
 	return;
 }
 
@@ -121,7 +122,7 @@ void cNetInterface::start_listening() {
 		_log->log_simple( msg );
 
 		/* Send msg to protocol handler */
-
+		protocol->addMsg(client_fd);
 	}
 
 	return;
@@ -202,6 +203,12 @@ cFDMNProtocol::~cFDMNProtocol() {
 	return;
 }
 
+void cFDMNProtocol::init_mappings() {
+	ADD_MAPPING(STAT);
+
+	return;
+}
+
 void cFDMNProtocol::initQueue() {
 	int queue_size = INI_EXTRACT(Network,MsgQueueSize,int);
 
@@ -227,7 +234,7 @@ void cFDMNProtocol::startThreads() {
 	listen_threads.reserve( sizeof(boost::thread*) * max_threads);
 
 	for ( int i = 0; i < max_threads; ++i) {
-		listen_threads[i] = new boost::thread(boost::bind( &cFDMNProtocol::listen, this) );
+		listen_threads[i] = new boost::thread(boost::bind( &cFDMNProtocol::listen, this ) );
 	}
 
 	return;
@@ -236,6 +243,7 @@ void cFDMNProtocol::startThreads() {
 void cFDMNProtocol::listen() {
 	stringstream log_stream;
 	queue_t *msg;
+	packet _pack;
 
 	while ( true ) {
 		msg = rm_queue(*msg_queue);
@@ -254,8 +262,14 @@ void cFDMNProtocol::listen() {
 
 void cFDMNProtocol::addMsg(int client_fd) {
 	queue_t *new_msg = (queue_t*) malloc( sizeof(queue_t) );
+	if ( new_msg == NULL ) {
+		_log->log_simple("Error allocating space for new message");
+		/* Send some error message to client */
+		return;
+	}
 	new_msg->fd = client_fd;
 	new_msg->id = msg_ids.ID_getid_ts();
+
 	if ( new_msg->id < 0 ) {
 		_log->log_simple("Fatal Error: cFDMNProtocol ran out of msg ids");
 		throw ((string) "Fatal Error: cFDMNProtocol ran out of msg ids");
@@ -268,8 +282,9 @@ void cFDMNProtocol::addMsg(int client_fd) {
 
 void cFDMNProtocol::status(stringstream &stream) {
 	stream << "Protocol Handler:" << endl;
-	stream << "\tMsg Received: " << msg_received << endl;
-	stream << "\tMsg Serviced: " << msg_serviced << endl;
+	stream << "\tProtocol Version: " << version << endl;
+	stream << "\tMsgs Received: " << msg_received << endl;
+	stream << "\tMsgs Serviced: " << msg_serviced << endl;
 	stream << endl;
 
 	return;
@@ -278,6 +293,14 @@ void cFDMNProtocol::status(stringstream &stream) {
 void cFDMNProtocol::cleanup() {
 	/* Need to free the array inide the queue. To add */
 	free(msg_queue);
+
+	for (int i = 0; i < listen_threads.size(); ++i) {
+
+		/* Need to set up the listen threads to block interruptions
+		*  during critical periods
+		*/
+		listen_threads[i]->interrupt();
+	}
 
 	return;
 }

@@ -56,6 +56,10 @@ ts_queue* init_queue(int _size) {
 
 	new_queue->data = (queue_t**) malloc(sizeof(queue_t*) * _size);
 
+	pthread_mutex_init( &new_queue->q_lock, NULL);
+	pthread_cond_init( &new_queue->q_empty, NULL);
+	pthread_cond_init( &new_queue->q_full, NULL);
+
 	if ( new_queue->data == NULL) {
 		fprintf(stderr, "init_queue failed to allocate space\n");
 		return NULL;
@@ -66,11 +70,13 @@ ts_queue* init_queue(int _size) {
 
 int add_queue(queue_t* new_t, ts_queue &q) {
 
-	boost::mutex::scoped_lock lk( q.q_lock );
+    if ( pthread_mutex_lock( &q.q_lock) ) {
+		throw ((string) "Failed to acquire lock, add_queue(...)");
+    }
 
 	/* wait for space to become available */
 	while ( q.slots_available <= 0 )
-		q.q_full.wait(lk);
+		pthread_cond_wait( &q.q_full, &q.q_lock );
 
 	/* The regular queue acts like a ring buffer but
 	 * it blocks when it fills unlike the buffer which
@@ -80,7 +86,8 @@ int add_queue(queue_t* new_t, ts_queue &q) {
     q.end = (q.end + 1) % q.size;
     --q.slots_available;
 
-    q.q_empty.notify_one();
+	pthread_mutex_unlock( &q.q_lock );
+    pthread_cond_signal( &q.q_empty );
 
     return 0;
 }
@@ -90,7 +97,9 @@ int add_queue_no_wait(queue_t* new_t, ts_queue &q, void (*free_fn) (void*)) {
 	#ifdef DEBUG
 	fprintf(stderr, "add_queue_no_wait called\n");
 	#endif
-	boost::mutex::scoped_lock lk(q.q_lock);
+    if ( pthread_mutex_lock( &q.q_lock) ) {
+		throw ((string) "Failed to acquire lock, add_queue_no_wait(...)");
+    }
 
 	if ( q.slots_available <= 0 ) {
 
@@ -100,6 +109,8 @@ int add_queue_no_wait(queue_t* new_t, ts_queue &q, void (*free_fn) (void*)) {
 		if ( free_fn != NULL )
 			free_fn( new_t );
 
+		pthread_mutex_unlock( &q.q_lock );
+
 		return 1;
 	}
 
@@ -107,26 +118,28 @@ int add_queue_no_wait(queue_t* new_t, ts_queue &q, void (*free_fn) (void*)) {
 	q.end = (q.end + 1) % q.size;
 	--q.slots_available;
 
-	q.q_empty.notify_one();
-
+	pthread_mutex_unlock( &q.q_lock );
+    pthread_cond_signal( &q.q_empty );
 
 	return 0;
 }
 
 /* Remove item from queue from with blocking */
 queue_t* rm_queue(ts_queue &q) {
-
-    boost::mutex::scoped_lock lk( q.q_lock );
+    if ( pthread_mutex_lock( &q.q_lock) ) {
+		throw ((string) "Failed to acquire lock, rm_queue(...)");
+    }
 
     while ( q.slots_available == q.size ) {
-        q.q_empty.wait(lk);
+       pthread_cond_wait( &q.q_empty, &q.q_lock );
     }
 
     queue_t* ret_val = q.data[q.start];
     q.start = (q.start + 1) % q.size;
     ++q.slots_available;
 
-    q.q_full.notify_one();
+	pthread_mutex_unlock( &q.q_lock );
+    pthread_cond_signal( &q.q_full );
 
     return ret_val;
 }
@@ -152,6 +165,8 @@ cID_dispatch::cID_dispatch() {
 
     /* free_buffer is a singly-linked list of free ID's */
     free_buffer = NULL;
+
+    pthread_mutex_init( &ID_lock, NULL);
     return;
 }
 
@@ -160,6 +175,8 @@ cID_dispatch::cID_dispatch(int limit) {
     ID_limit = limit;
     recent_ID = -1;
     free_buffer = NULL;
+
+    pthread_mutex_init( &ID_lock, NULL);
     return;
 }
 
@@ -179,10 +196,11 @@ int cID_dispatch::ID_getid() {
 }
 
 int cID_dispatch::ID_getid_ts() {
-	ID_lock.lock();
+	pthread_mutex_lock( &ID_lock );
 
     if ( free_buffer == NULL ) {
         recent_ID = ID_counter;
+        pthread_mutex_unlock( &ID_lock );
         return ID_counter++;
     }
     int new_id = free_buffer->value;
@@ -193,7 +211,7 @@ int cID_dispatch::ID_getid_ts() {
 
     recent_ID = new_id;
 
-    ID_lock.unlock();
+    pthread_mutex_unlock( &ID_lock );
     return new_id;
 }
 
@@ -212,7 +230,7 @@ void cID_dispatch::ID_returnid(int id) {
 }
 
 void cID_dispatch::ID_returnid_ts(int id) {
-	ID_lock.lock();
+	pthread_mutex_lock( &ID_lock );
 
     if ( id == ID_counter ) {
         --ID_counter;
@@ -221,6 +239,6 @@ void cID_dispatch::ID_returnid_ts(int id) {
         free_buffer = reclaimed;
     }
 
-    ID_lock.lock();
+	pthread_mutex_unlock( &ID_lock );
     return;
 }
