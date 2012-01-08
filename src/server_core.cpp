@@ -41,8 +41,7 @@ void cServerCore::cleanup() {
 void cServerCore::start_server() {
 	time( &start_time );
 
-	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, network));
-	//protocol
+	net_thread = new boost::thread(boost::bind(&cNetInterface::start_listening, boost::ref(network)));
 
     if ( INI_EXTRACT(Admin, admin_prompt, bool) ) {
         init_admin();

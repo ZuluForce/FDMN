@@ -48,13 +48,16 @@ class cNetInterface: public cCoreModule {
 
 		int max_retries;
 
+		cProtocol *protocol;
+
 	public:
 		cNetInterface();
 		cNetInterface(int port);
 		~cNetInterface();
 
 		void init_net(int port);
-		void start_listening(cProtocol&);
+		void set_protocol(cProtocol*);
+		void start_listening();
 
 		void status(stringstream& stream);
 		void cleanup();

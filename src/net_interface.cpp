@@ -3,6 +3,15 @@
 extern cSettings *_settings;
 extern cLog *_log;
 
+cProtocol::cProtocol() {
+	/* Empty constructor for Pure Abstract Class */
+	return;
+}
+
+cProtocol::~cProtocol() {
+	return;
+}
+
 cNetInterface::cNetInterface() {
 	initialized = false;
 	return;
@@ -73,7 +82,13 @@ void cNetInterface::init_net(int port) {
 	return;
 }
 
-void cNetInterface::start_listening(cProtocol &_protocol) {
+void cNetInterface::set_protocol(cProtocol *_protocol) {
+	protocol = _protocol;
+
+	return;
+}
+
+void cNetInterface::start_listening() {
 	sockaddr_in client;
 	int failed_attempts = 0;
 
@@ -223,9 +238,9 @@ void cFDMNProtocol::listen() {
 	queue_t *msg;
 
 	while ( true ) {
-		msg = rm_queue(msg_queue);
+		msg = rm_queue(*msg_queue);
 
-		log_stream.clear()
+		log_stream.clear();
 		log_stream << "Listener thread: " << boost::this_thread::get_id();
 		log_stream << " Received msg: " << msg->id << endl;
 		_log->log_simple(log_stream.str());
@@ -246,7 +261,7 @@ void cFDMNProtocol::addMsg(int client_fd) {
 		throw ((string) "Fatal Error: cFDMNProtocol ran out of msg ids");
 	}
 
-	add_queue( new_msg, msg_queue );
+	add_queue( new_msg, *msg_queue );
 
 	return;
 }

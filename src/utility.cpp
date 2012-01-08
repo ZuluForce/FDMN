@@ -54,7 +54,7 @@ ts_queue* init_queue(int _size) {
 	new_queue->start = 0;
 	new_queue->end = 0;
 
-	new_queue->data = malloc(sizeof(queue_t*) * _size);
+	new_queue->data = (queue_t**) malloc(sizeof(queue_t*) * _size);
 
 	if ( new_queue->data == NULL) {
 		fprintf(stderr, "init_queue failed to allocate space\n");
@@ -66,14 +66,11 @@ ts_queue* init_queue(int _size) {
 
 int add_queue(queue_t* new_t, ts_queue &q) {
 
-	if ( q.q_lock.lock() ) {
-		fprintf(stderr, "Failed to lock thread in add_queue\n");
-		return 1;
-	}
+	boost::mutex::scoped_lock lk( q.q_lock );
 
 	/* wait for space to become available */
 	while ( q.slots_available <= 0 )
-		q.q_full(q.q_lock);
+		q.q_full.wait(lk);
 
 	/* The regular queue acts like a ring buffer but
 	 * it blocks when it fills unlike the buffer which
@@ -83,22 +80,17 @@ int add_queue(queue_t* new_t, ts_queue &q) {
     q.end = (q.end + 1) % q.size;
     --q.slots_available;
 
-    q.q_lock.unlock();
-
     q.q_empty.notify_one();
 
     return 0;
 }
 
 /* Same aas add_queue but doesn't wait for space */
-int add_queue_no_wait(queue_t* new_t, ts_queue *q, void (*free_fn) (void*)) {
+int add_queue_no_wait(queue_t* new_t, ts_queue &q, void (*free_fn) (void*)) {
 	#ifdef DEBUG
 	fprintf(stderr, "add_queue_no_wait called\n");
 	#endif
-	if ( q.q_lock.lock() ) {
-		fprintf(stderr, "Failed to acquire lock in add_queue_no_wait\n");
-		return 1;
-	}
+	boost::mutex::scoped_lock lk(q.q_lock);
 
 	if ( q.slots_available <= 0 ) {
 
@@ -108,8 +100,6 @@ int add_queue_no_wait(queue_t* new_t, ts_queue *q, void (*free_fn) (void*)) {
 		if ( free_fn != NULL )
 			free_fn( new_t );
 
-		q.q_lock.lock();
-
 		return 1;
 	}
 
@@ -117,7 +107,6 @@ int add_queue_no_wait(queue_t* new_t, ts_queue *q, void (*free_fn) (void*)) {
 	q.end = (q.end + 1) % q.size;
 	--q.slots_available;
 
-	q.q_lock.unlock();
 	q.q_empty.notify_one();
 
 
@@ -125,22 +114,18 @@ int add_queue_no_wait(queue_t* new_t, ts_queue *q, void (*free_fn) (void*)) {
 }
 
 /* Remove item from queue from with blocking */
-queue_t* rm_queue(ts_queue *q) {
+queue_t* rm_queue(ts_queue &q) {
 
-    if ( q.q_lock.lock() ) {
-        fprintf(stderr, "Failed to lock thread in rm_queue\n");
-        return NULL;
-    }
+    boost::mutex::scoped_lock lk( q.q_lock );
 
     while ( q.slots_available == q.size ) {
-        q.q_empty.wait(q.q_lock);
+        q.q_empty.wait(lk);
     }
 
     queue_t* ret_val = q.data[q.start];
     q.start = (q.start + 1) % q.size;
     ++q.slots_available;
 
-    q.q_lock.unlock();
     q.q_full.notify_one();
 
     return ret_val;

@@ -114,6 +114,7 @@ class INIReader {
         /* Manipulators */
         void addDefault(const string& section, const string& key, const string& value);
         template<class T> T extractValue(const string& section, const string& key);
+        template<class T> T extractDefault(const string& section, const string& key);
 
         string extractComment(const string& section, const string& key);
 };
@@ -127,6 +128,17 @@ T INIReader::extractValue(const string& section, const string& key) {
     stream >> out;
 
     return out;
+}
+
+template <class T>
+T INIReader::extractDefault(const string& section, const string& key) {
+	stringstream stream;
+	stream << getDefault(section,key);
+
+	T out;
+	stream >> out;
+
+	return out;
 }
 
 #endif // INIREADER_H_INCLUDED

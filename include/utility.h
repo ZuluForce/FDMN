@@ -8,6 +8,7 @@
 #include <limits.h>
 
 #include <boost/thread/mutex.hpp>
+#include <boost/thread/condition_variable.hpp>
 
 #define SEC_PER_YEAR 31536000
 #define SEC_PER_DAY 86400
