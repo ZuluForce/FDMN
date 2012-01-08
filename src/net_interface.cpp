@@ -44,6 +44,7 @@ void cNetInterface::init_net(int port) {
 		_log->log_simple(msg);
 
 		/* Add function in server core to halt after this */
+		kill(getpid(), SIGINT);
 		return;
 	}
 
@@ -60,6 +61,7 @@ void cNetInterface::init_net(int port) {
 		_log->log_simple( msg );
 
 		/* Exit Server */
+		kill(getpid(), SIGINT);
 		return;
 	}
 
@@ -76,6 +78,7 @@ void cNetInterface::init_net(int port) {
 		_log->log_simple( msg );
 
 		/* Exit Server */
+		kill(getpid(), SIGINT);
 		return;
 	}
 

@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 #include <limits.h>
+#include <signal.h>
+#include <sys/types.h>
 
 #include <pthread.h>
 //#include <boost/thread/mutex.hpp>
