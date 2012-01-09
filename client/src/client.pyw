@@ -54,11 +54,14 @@ class ClientWindow(QtGui.QMainWindow):
 
         ##Create Layouts##
         VBox = QtGui.QVBoxLayout()
+        HBoxR2 = QtGui.QHBoxLayout()
         grid = QtGui.QGridLayout()
         grid.setSpacing(10)
 
         VBox.insertLayout(0, grid)
-        VBox.insertWidget(1, self.fileTree)
+        VBox.insertLayout(1, HBoxR2)
+        HBoxR2.insertWidget(0, self.remoteTree)
+        HBoxR2.insertWidget(1, self.fileTree)
         ##Add Widgets to Grid##
         grid.setColumnMinimumWidth(1,100)
         
@@ -119,19 +122,19 @@ class ClientWindow(QtGui.QMainWindow):
         fdmn_sock.SetStatusHook(self.status.showMessage)
 
     def createFileBrowser(self):
+        ##File Browser for local files##
         self.fileModel = QtGui.QFileSystemModel(self.mainWidget)
-        #self.fileModel.setRootPath(os.curdir)
+        self.fileModel.setRootPath(os.curdir)
 
-        self.fileTree = QtGui.QTreeWidget(self.mainWidget)
-        self.fileTree.setColumnCount(3)
-        self.fileTree.setHeaderLabels(("Filename","Filesize","Date Modified"))
-        #self.fileTree.setSelectionModel(self.fileModel)
-        item = self.fileTree.itemFromIndex(self.fileModel.setRootPath(os.curdir))
-        self.fileTree.addTopLevelItem(item)
+        self.fileTree = QtGui.QTreeView(self.mainWidget)
+        self.fileTree.setModel(self.fileModel)
+
+        ##File Browser for remote files##
+        self.remoteTree = QtGui.QTreeView(self.mainWidget)
 
     def closeEvent(self, event):
         reply = QtGui.QMessageBox.question(self, 'Message',
-                                        "Are you sure to quit?", QtGui.QMessageBox.Yes |
+                                        "Quit?", QtGui.QMessageBox.Yes |
                                         QtGui.QMessageBox.No, QtGui.QMessageBox.Yes)
 
         if reply == QtGui.QMessageBox.Yes:
