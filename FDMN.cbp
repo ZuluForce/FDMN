@@ -53,6 +53,7 @@
 		<Unit filename="include/file_management/mounts.h" />
 		<Unit filename="include/logging.h" />
 		<Unit filename="include/net_interface.h" />
+		<Unit filename="include/network/request_mappings.h" />
 		<Unit filename="include/server_core.h" />
 		<Unit filename="include/settings.h" />
 		<Unit filename="include/settings/default_settings.h" />
@@ -74,6 +75,7 @@
 		<Unit filename="src/file_management/mounts.cpp" />
 		<Unit filename="src/logging.cpp" />
 		<Unit filename="src/net_interface.cpp" />
+		<Unit filename="src/network/request_mappings.cpp" />
 		<Unit filename="src/server_core.cpp" />
 		<Unit filename="src/settings.cpp" />
 		<Unit filename="src/utility.cpp" />

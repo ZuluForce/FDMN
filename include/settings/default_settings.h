@@ -17,6 +17,9 @@ inline void setDefaults(INIReader *ini) {
 	/* Formatting */
 	ADD(Format,time_style,1);
 
+	//Only use if the terminal support ascii escape codes
+	ADD(Format,auto_complete,0);
+
 	/* Section Network */
 	ADD(Network,port,9000);
 	ADD(Network,MaxNetThreads,4);

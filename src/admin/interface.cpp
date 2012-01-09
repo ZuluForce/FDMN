@@ -15,6 +15,8 @@ int start_admin() {
 		return -1;
 	}
 
+	//bool auto_complete = INI_EXTRACT(Format,auto_complete);
+
 	string input;
 
     while ( true ) {
