@@ -53,10 +53,13 @@ fdmn_server_win: fdmn.cpp fdmn.h $(SERVER_DEPS)
 	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS) $(_CMD_OBJS) $(_LIB_OBJS_WIN) -o $(BINDIR)/$@
 
 packet_tests: packet_tests.c packet_tests.h packets.o
-	$(CC) $(SRCDIR)/network/packet_tests.c packets.o -o $(TESTBIN)/$@
+	$(CC) -Iinclude $(SRCDIR)/network/packet_tests.c $(OBJDIR)/packets.o -o $(TESTBIN)/$@ -DDEBUG
 
 %.o: %.cpp %.h
 	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS)
+
+%.o: %.c %.h
+	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS) -DDEBUG
 
 interface.o: interface.cpp interface.h $(CMD_OBJS)
 	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS)
