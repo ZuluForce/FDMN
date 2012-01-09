@@ -67,13 +67,6 @@ class cNetInterface: public cCoreModule {
 
 };
 
-struct packet {
-	int client_fd;
-	char *request;
-
-	//Usually casted to some struct type
-	void *extra_data;
-};
 
 class cFDMNProtocol: public cProtocol, cCoreModule {
 	private:

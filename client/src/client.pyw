@@ -124,7 +124,7 @@ class ClientWindow(QtGui.QMainWindow):
     def createFileBrowser(self):
         ##File Browser for local files##
         self.fileModel = QtGui.QFileSystemModel(self.mainWidget)
-        self.fileModel.setRootPath(os.curdir)
+        self.fileModel.setRootPath(os.getcwd())
 
         self.fileTree = QtGui.QTreeView(self.mainWidget)
         self.fileTree.setModel(self.fileModel)
