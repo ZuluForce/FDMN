@@ -9,6 +9,7 @@ INCDIR = include
 OBJDIR = obj
 BINDIR = bin
 LIBDIR = lib
+TESTBIN = bin/tests
 
 LIB_OBJS = iniReader_linux_x86_64.o
 _LIB_OBJS = $(patsubst %,$(LIBDIR)/%, $(LIB_OBJS))
@@ -31,6 +32,7 @@ vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/admin
 vpath %.cpp $(SRCDIR)/admin/cmd_bindings
 vpath %.cpp $(SRCDIR)/network
+vpath %.c $(SRCDIR)/network
 
 vpath %.h $(INCDIR)
 vpath %.h $(INCDIR)/admin
@@ -49,6 +51,9 @@ fdmn_server_debug:
 
 fdmn_server_win: fdmn.cpp fdmn.h $(SERVER_DEPS)
 	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS) $(_CMD_OBJS) $(_LIB_OBJS_WIN) -o $(BINDIR)/$@
+
+packet_tests: packet_tests.c packet_tests.h packets.o
+	$(CC) $(SRCDIR)/network/packet_tests.c packets.o -o $(TESTBIN)/$@
 
 %.o: %.cpp %.h
 	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS)

@@ -9,7 +9,7 @@
 		<Build>
 			<Target title="Release">
 				<Option output="FDMN" prefix_auto="1" extension_auto="1" />
-				<Option object_output="C:/Users/Planeman/Git Repo/FDMN/.objs" />
+				<Option object_output="C:\Users\Planeman\Git Repo\FDMN\.objs" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
@@ -20,7 +20,7 @@
 				</Linker>
 			</Target>
 			<Target title="fdmn_server">
-				<Option output="bin/fdmn" prefix_auto="1" extension_auto="1" />
+				<Option output="bin\fdmn" prefix_auto="1" extension_auto="1" />
 				<Option working_dir="bin" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -41,37 +41,40 @@
 		<Unit filename="Makefile">
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="include/admin/cmd_bindings/all_cmds.h" />
-		<Unit filename="include/admin/cmd_bindings/cmd_a.h" />
-		<Unit filename="include/admin/cmd_bindings/cmd_c.h" />
-		<Unit filename="include/admin/cmd_bindings/cmd_l.h" />
-		<Unit filename="include/admin/cmd_bindings/cmd_s.h" />
-		<Unit filename="include/admin/cmd_bindings/cmd_t.h" />
-		<Unit filename="include/admin/interface.h" />
-		<Unit filename="include/core_classes.h" />
-		<Unit filename="include/fdmn.h" />
-		<Unit filename="include/file_management/mounts.h" />
-		<Unit filename="include/logging.h" />
-		<Unit filename="include/net_interface.h" />
-		<Unit filename="include/network/request_mappings.h" />
-		<Unit filename="include/server_core.h" />
-		<Unit filename="include/settings.h" />
-		<Unit filename="include/settings/default_settings.h" />
-		<Unit filename="include/utility.h" />
-		<Unit filename="lib/iniReader.h" />
+		<Unit filename="include\admin\cmd_bindings\all_cmds.h" />
+		<Unit filename="include\admin\cmd_bindings\cmd_a.h" />
+		<Unit filename="include\admin\cmd_bindings\cmd_c.h" />
+		<Unit filename="include\admin\cmd_bindings\cmd_l.h" />
+		<Unit filename="include\admin\cmd_bindings\cmd_s.h" />
+		<Unit filename="include\admin\cmd_bindings\cmd_t.h" />
+		<Unit filename="include\admin\interface.h" />
+		<Unit filename="include\core_classes.h" />
+		<Unit filename="include\fdmn.h" />
+		<Unit filename="include\file_management\mounts.h" />
+		<Unit filename="include\logging.h" />
+		<Unit filename="include\net_interface.h" />
+		<Unit filename="include\network\packet_tests.h" />
+		<Unit filename="include\network\packets.h" />
+		<Unit filename="include\network\request_mappings.h" />
+		<Unit filename="include\server_core.h" />
+		<Unit filename="include\settings.h" />
+		<Unit filename="include\settings\default_settings.h" />
+		<Unit filename="include\utility.h" />
+		<Unit filename="lib\iniReader.h" />
 		<Unit filename="settings.ini" />
-		<Unit filename="src/admin/cmd_bindings/cmd_a.cpp" />
-		<Unit filename="src/admin/cmd_bindings/cmd_c.cpp" />
-		<Unit filename="src/admin/cmd_bindings/cmd_l.cpp" />
-		<Unit filename="src/admin/cmd_bindings/cmd_s.cpp" />
-		<Unit filename="src/admin/cmd_bindings/cmd_t.cpp" />
-		<Unit filename="src/admin/interface.cpp">
+		<Unit filename="src\admin\cmd_bindings\cmd_a.cpp" />
+		<Unit filename="src\admin\cmd_bindings\cmd_c.cpp" />
+		<Unit filename="src\admin\cmd_bindings\cmd_l.cpp" />
+		<Unit filename="src\admin\cmd_bindings\cmd_s.cpp" />
+		<Unit filename="src\admin\cmd_bindings\cmd_t.cpp" />
+		<Unit filename="src\admin\interface.cpp">
 			<Option target="Release" />
 		</Unit>
-		<Unit filename="src/core_classes.cpp" />
-		<Unit filename="src/fdmn.cpp">
+		<Unit filename="src\core_classes.cpp" />
+		<Unit filename="src\fdmn.cpp">
 			<Option target="Release" />
 		</Unit>
+<<<<<<< HEAD
 		<Unit filename="src/file_management/mounts.cpp" />
 		<Unit filename="src/logging.cpp" />
 		<Unit filename="src/net_interface.cpp" />
@@ -79,6 +82,21 @@
 		<Unit filename="src/server_core.cpp" />
 		<Unit filename="src/settings.cpp" />
 		<Unit filename="src/utility.cpp" />
+=======
+		<Unit filename="src\file_management\mounts.cpp" />
+		<Unit filename="src\logging.cpp" />
+		<Unit filename="src\net_interface.cpp" />
+		<Unit filename="src\network\packet_tests.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src\network\packets.c">
+			<Option compilerVar="CPP" />
+		</Unit>
+		<Unit filename="src\network\request_mappings.cpp" />
+		<Unit filename="src\server_core.cpp" />
+		<Unit filename="src\settings.cpp" />
+		<Unit filename="src\utility.cpp" />
+>>>>>>> b040f5dcf0e472f4103b6f98d1c997934b8ce503
 		<Extensions>
 			<code_completion />
 			<debugger />
