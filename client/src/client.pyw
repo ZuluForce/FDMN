@@ -2,6 +2,7 @@ import sys,os
 
 from fdmn_protocol import FDMN_Protocol
 from PyQt4 import QtGui, QtCore, Qt
+from PyQt4.QtCore import QDir
 
 version = '0.0.1'
 
@@ -76,7 +77,9 @@ class ClientWindow(QtGui.QMainWindow):
         
         ##self.mainWidget.setLayout(grid)
         self.mainWidget.setLayout(VBox)
-        self.setGeometry(300,300,350,300)
+        self.setGeometry(300,300,500,400)
+        self.setMinimumWidth(500)
+        self.setMinimumHeight(400)
         self.show()
 
     def createMenu(self):
@@ -124,10 +127,23 @@ class ClientWindow(QtGui.QMainWindow):
     def createFileBrowser(self):
         ##File Browser for local files##
         self.fileModel = QtGui.QFileSystemModel(self.mainWidget)
+
+        ##Set Filter
+        self.fileFilter = self.fileModel.filter()
+        self.fileFilter = 0
+        self.fileFilter |= QDir.AllDirs
+        self.fileFilter |= QDir.AllEntries
+        self.fileFilter |= QDir.NoDotAndDotDot
+        self.fileFilter |= QDir.Readable
+        self.fileFilter |= QDir.Writable
+        self.fileFilter |= QDir.Executable
+        
+        self.fileModel.setFilter(self.fileFilter)
         self.fileModel.setRootPath(os.getcwd())
 
         self.fileTree = QtGui.QTreeView(self.mainWidget)
         self.fileTree.setModel(self.fileModel)
+        self.fileTree.setColumnWidth(0,200)
 
         ##File Browser for remote files##
         self.remoteTree = QtGui.QTreeView(self.mainWidget)
