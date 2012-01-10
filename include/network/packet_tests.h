@@ -4,5 +4,4 @@
 #include <stdio.h>
 #include "network/packets.h"
 
-void printPacket(packet*);
 #endif // PACKET_TESTS_H_INCLUDED

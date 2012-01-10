@@ -2,6 +2,21 @@
 
 ssize_t enumSize = sizeof(enumReqType);
 
+void printPacket(packet *_packet) {
+	fprintf(stderr, "Request Type: %d\n", _packet->request);
+
+	switch (_packet->request) {
+	case eSTAT: {
+		STAT_packet *stat_pack = (STAT_packet*) _packet->data;
+		fprintf(stderr, "Mount #: %d\n", stat_pack->mount);
+		fprintf(stderr, "Filename: %s\n", stat_pack->filereq);
+
+		break;
+	}
+	}
+	return;
+}
+
 char* serializePacket(packet *_packet) {
 	char *serialPacket;
 

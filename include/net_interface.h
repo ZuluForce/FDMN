@@ -23,6 +23,7 @@ struct packet; //So inclusion of reqest_mappings works
 #include "logging.h"
 #include "settings.h"
 #include "utility.h"
+#include "network/packets.h"
 #include "network/request_mappings.h"
 
 #include "core_classes.h"
@@ -70,7 +71,7 @@ class cNetInterface: public cCoreModule {
 
 class cFDMNProtocol: public cProtocol, cCoreModule {
 	private:
-		static const char* version() { return "0.1"; };
+		static const char* version() { return "0.0.1"; };
 
 		ts_queue* msg_queue;
 		cID_dispatch msg_ids;

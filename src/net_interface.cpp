@@ -246,15 +246,34 @@ void cFDMNProtocol::startThreads() {
 void cFDMNProtocol::listen() {
 	stringstream log_stream;
 	queue_t *msg;
-	packet _pack;
+
+	ssize_t bytesReceived;
+	char raw_pack[MAX_PACKET];
+	packet *_pack;
 
 	while ( true ) {
 		msg = rm_queue(*msg_queue);
 
-		log_stream.clear();
+		log_stream.str(""); //Clear the stream
 		log_stream << "Listener thread: " << boost::this_thread::get_id();
-		log_stream << " Received msg: " << msg->id << endl;
+		log_stream << " Received msg: " << msg->id;
 		_log->log_simple(log_stream.str());
+
+		//Read msg from socket
+		bytesReceived = recv(msg->fd, raw_pack, MAX_PACKET, 0);
+		_pack = deserializePacket( raw_pack );
+
+		//Handle the request
+		switch (_pack->request) {
+			case eSTAT:
+				STAT_request( _pack );
+				break;
+
+			default:
+				break;
+		}
+
+		free_packet( _pack );
 
 		status_lock.lock();
 		++msg_received; //Should be moved to the top
@@ -285,7 +304,7 @@ void cFDMNProtocol::addMsg(int client_fd) {
 
 void cFDMNProtocol::status(stringstream &stream) {
 	stream << "Protocol Handler:" << endl;
-	stream << "\tProtocol Version: " << version << endl;
+	stream << "\tProtocol Version: " << cFDMNProtocol::version() << endl;
 	stream << "\tMsgs Received: " << msg_received << endl;
 	stream << "\tMsgs Serviced: " << msg_serviced << endl;
 	stream << endl;

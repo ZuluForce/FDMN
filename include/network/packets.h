@@ -34,6 +34,7 @@ struct STAT_packet {
 	char filereq[MAX_PATHSIZE];
 };
 
+void printPacket(packet*);
 char* serializePacket(packet*);
 packet* deserializePacket(char*);
 

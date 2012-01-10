@@ -1,7 +1,9 @@
 #ifndef REQUEST_MAPPINGS_H_INCLUDED
 #define REQUEST_MAPPINGS_H_INCLUDED
 
+#include <sstream>
 
+#include "settings.h"
 #include "net_interface.h"
 #include "utility.h"
 
