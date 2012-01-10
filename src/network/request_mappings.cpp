@@ -4,7 +4,6 @@ extern cLog *_log;
 
 void STAT_request(packet *_packet) {
 	STAT_packet *s_pack = (STAT_packet*) _packet->data;
-	printPacket(_packet);
 
 	stringstream log_msg;
 	log_msg << "Stat Reqest (Mount:File) ";
