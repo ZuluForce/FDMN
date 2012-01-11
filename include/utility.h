@@ -77,4 +77,65 @@ typedef class cID_dispatch {
         void ID_returnid(int id);
         void ID_returnid_ts(int id);
 } cID_dispatch;
+
+
+
+enum pivotType {
+	pivotMiddle,
+	pivotRandom
+}
+
+/* Quicksort Implementation for std::vectors
+ * Uses in-place partitioning for better cache performance
+ */
+template<typename T>
+void QuicksortVector<T>(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType,
+						int start, int end) {
+	if ( (end - start) <= 1 )
+		return;
+
+	if ( pivottype == pivotMiddle ) {
+		int pivot = (start + end) / 2;
+		QuickPartition<T>(items, sort_fn, start, end, pivot);
+	}
+
+	QuicksortVector<T>(items, sort_fn, pType, start, pivot - 1);
+	QuicksortVector<T>(items, sort_fn, pType, start, pivot + 1);
+	return;
+}
+
+/* Sort Functions Return Values:
+ * -1 : Desired order
+ * 0  : Equal
+ * 1  : Reverse order (will be switched)
+ */
+template<typename T>
+void QuickPartition<T>(std::vector<T> items, int (*sort_fn) (T,T),
+					int left, int right, int pivot) {
+
+	T temp;
+	T pivotValue = items[pivot];
+
+	temp = items[right]
+	items[right] = pivotValue;
+	items[pivot] = temp;
+
+	int placeIndex = left;
+	for (int i = left; i < right; ++i) {
+		if (sort_fn(items[i], pivotValue) == 1) {
+			/* Swap the values */
+			temp = items[i];
+			items[i] = items[placeIndex];
+			items[placeIndex] = temp;
+
+			++placeIndex;
+		}
+	}
+
+	/* Put pivot into correct location */
+	items[right] = items[placeIndex];
+	items[placeIndex] = pivotValue;
+
+	return;
+}
 #endif // UTILITY_H_INCLUDED

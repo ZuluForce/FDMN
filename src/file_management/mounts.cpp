@@ -5,28 +5,24 @@ cMounts::cMounts() {
 	return;
 }
 
-cMounts::~~cMounts() {
-	return;
-}
-
-void cMounts::add_local(string &path) {
-	mount *new_mount = malloc( sizeof(mount) );
-	new_mount->type = MT_LOCAL;
-
-	strncpy(new_mount->mountLoc._local.full_path, path.c_str(), FILENAME_MAX);
-
-	mounts.push_back(new_mount);
+cMountSys::~~cMounts() {
 
 	return;
 }
 
-void cMounts::add_local(char *path) {
-	mount *new_mount = malloc( sizeof(mount) );
-	new_mount->type = MT_LOCAL;
+void cMountSys::setRoot(string &rootDir) {
+	if ( chdir(rootDir.c_str()) == -1 ) {
+		string error("Failed to change root directory: ");
+		error += strerror(errno);
+		fprintf(stderr, error.c_str());
+		_log->log_simple(error.c_str());
 
-	strncpy(new_mount->mountLoc._local.full_path, path, FILENAME_MAX);
+		return;
+	}
 
-	mounts.push_back(new_mount);
+	string msg("Root directory changed to: ");
+	msg += rootDir;
+	_log->log_simple(msg.c_str());
 
 	return;
 }
