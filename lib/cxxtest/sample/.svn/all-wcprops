@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample
+END
+SimpleTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/SimpleTest.h
+END
+DeltaTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/DeltaTest.h
+END
+only.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/only.tpl
+END
+file_printer.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/file_printer.tpl
+END
+EnumTraits.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/EnumTraits.h
+END
+Makefile.msvc
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/Makefile.msvc
+END
+ExceptionTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/ExceptionTest.h
+END
+Construct
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/Construct
+END
+Makefile.PL
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/Makefile.PL
+END
+aborter.tpl
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/aborter.tpl
+END
+TraitsTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/TraitsTest.h
+END
+CreatedTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/CreatedTest.h
+END
+Makefile.unix
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/Makefile.unix
+END
+yes_no_runner.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/yes_no_runner.cpp
+END
+Makefile.bcc32
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/Makefile.bcc32
+END
+MessageTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/MessageTest.h
+END
+FixtureTest.h
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/F11C3081-47/!svn/ver/30/project/lib/cxxtest/sample/FixtureTest.h
+END

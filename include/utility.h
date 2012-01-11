@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 #include <sstream>
+#include <vector>
 #include <limits.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -80,43 +81,19 @@ typedef class cID_dispatch {
 
 
 
-enum pivotType {
-	pivotMiddle,
-	pivotRandom
-}
-
-/* Quicksort Implementation for std::vectors
- * Uses in-place partitioning for better cache performance
- */
-template<typename T>
-void QuicksortVector<T>(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType,
-						int start, int end) {
-	if ( (end - start) <= 1 )
-		return;
-
-	if ( pivottype == pivotMiddle ) {
-		int pivot = (start + end) / 2;
-		QuickPartition<T>(items, sort_fn, start, end, pivot);
-	}
-
-	QuicksortVector<T>(items, sort_fn, pType, start, pivot - 1);
-	QuicksortVector<T>(items, sort_fn, pType, start, pivot + 1);
-	return;
-}
-
 /* Sort Functions Return Values:
  * -1 : Desired order
  * 0  : Equal
  * 1  : Reverse order (will be switched)
  */
-template<typename T>
-void QuickPartition<T>(std::vector<T> items, int (*sort_fn) (T,T),
+template <typename T>
+void QuickPartition(std::vector<T> items, int (*sort_fn) (T,T),
 					int left, int right, int pivot) {
 
 	T temp;
 	T pivotValue = items[pivot];
 
-	temp = items[right]
+	temp = items[right];
 	items[right] = pivotValue;
 	items[pivot] = temp;
 
@@ -138,4 +115,39 @@ void QuickPartition<T>(std::vector<T> items, int (*sort_fn) (T,T),
 
 	return;
 }
+
+enum pivotType {
+	pivotMiddle,
+	pivotRandom
+};
+
+/* Quicksort Implementation for std::vectors
+ * Uses in-place partitioning for better cache performance
+ */
+template <typename T>
+void QuicksortVector(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType,
+						int start, int end) {
+	if ( (end - start) <= 1 )
+		return;
+	int pivot;
+
+	switch ( pType ) {
+		case pivotMiddle:
+			pivot = (start + end) / 2;
+			break;
+
+		case pivotRandom:
+			pivot = start + (rand() % (start - end));
+			break;
+
+		default:
+			return;
+	}
+
+	QuickPartition<T>(items, sort_fn, start, end, pivot);
+	QuicksortVector<T>(items, sort_fn, pType, start, pivot - 1);
+	QuicksortVector<T>(items, sort_fn, pType, start, pivot + 1);
+	return;
+}
+
 #endif // UTILITY_H_INCLUDED
