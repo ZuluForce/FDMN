@@ -32,6 +32,7 @@ void mount_cmd(string cmd) {
 	if ( OPTION_SET(mapOptions,'r','-') )
 		cout << "r flag set for mount_cmd" << endl;
 
+	clearFlags(mapOptions);
 	return;
 }
 
@@ -42,6 +43,8 @@ void eval_cmd_m(string cmd) {
 		mount_cmd(cmd);
 		return;
 	}
+
+	cerr << "Invalid command: " << cmd_name;
 
 	return;
 }

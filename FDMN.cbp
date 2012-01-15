@@ -45,6 +45,7 @@
 		<Unit filename="include/admin/cmd_bindings/cmd_a.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_c.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_l.h" />
+		<Unit filename="include/admin/cmd_bindings/cmd_m.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_s.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_t.h" />
 		<Unit filename="include/admin/interface.h" />
@@ -66,6 +67,7 @@
 		<Unit filename="src/admin/cmd_bindings/cmd_a.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_c.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_l.cpp" />
+		<Unit filename="src/admin/cmd_bindings/cmd_m.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_s.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_t.cpp" />
 		<Unit filename="src/admin/interface.cpp">

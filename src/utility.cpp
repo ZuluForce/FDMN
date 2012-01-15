@@ -368,6 +368,15 @@ void parseFlags(argMap &args, string &input, char argDelimit) {
 }
 
 void clearFlags(argMap& flags) {
+	argMap::iterator top_it;
+	std::map<char,uOption>::iterator nested_it;
+
+	for ( top_it = flags.begin(); top_it != flags.end(); ++top_it ) {
+		for ( nested_it = (*top_it).second.begin();
+			nested_it != (*top_it).second.end(); ++nested_it) {
+			(*nested_it).second.set = false;
+			}
+	}
 
 	return;
 }
