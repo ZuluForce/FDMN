@@ -381,6 +381,6 @@ void clearFlags(argMap& flags) {
 	return;
 }
 
-argMap& staticOptions::operator ()() {
+argMap& OptionsBase::operator ()() {
 	return options;
 }

@@ -11,15 +11,9 @@ using namespace std;
 
 void eval_cmd_m(string cmd);
 
-class mountOptions {
-	private:
-		argMap options;
-
+class mountOptions: public OptionsBase {
 	public:
 		mountOptions();
-		~mountOptions();
-
-		argMap& operator ()();
 };
 
 #endif // CMD_M_H_INCLUDED

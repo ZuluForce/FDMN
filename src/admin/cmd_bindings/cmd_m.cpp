@@ -64,11 +64,3 @@ mountOptions::mountOptions() {
 
 	return;
 }
-
-mountOptions::~mountOptions() {
-	return;
-}
-
-argMap& mountOptions::operator ()() {
-	return options;
-}

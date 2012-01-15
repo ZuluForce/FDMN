@@ -184,8 +184,8 @@ typedef std::map<char, std::map<char,uOption> > argMap;
 void parseFlags(argMap &args, string &input, char argDelimit = '-');
 void clearFlags(argMap &args);
 
-class staticOptions {
-	private:
+class OptionsBase {
+	protected:
 		argMap options;
 
 	public:
