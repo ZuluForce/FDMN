@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <map>
 #include <limits.h>
 #include <signal.h>
 #include <sys/types.h>
@@ -150,4 +151,35 @@ void QuicksortVector(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType
 	return;
 }
 
+
+/* Flag Parser */
+#define ADD_OPTION(map,x) map[x]
+#define ADD_EXTRA(map,option,extra) map[option][extra]
+#define ACCEPT_ANY_EXTRA(map,option) map[option][' ']
+#define OPTION_SET(map,option,delimit) map[option][delimit].set
+#define EXTRA_SET(map,option,extra) map[option][extra].set
+
+#define INT_ARG_FLAG (char) 0
+#define STR_ARG_FLAG (char) 1
+
+#define ADD_INT_ARG(map,option) map[option][INT_ARG_FLAG]
+#define ADD_STR_ARG(map,option) map[option][STR_ARG_FLAG]
+
+#define GET_INT_ARG(map,option) map[option][INT_ARG_FLAG].intArg
+#define GET_STR_START(map,option) map[option][STR_ARG_FLAG].strStart
+#define GET_STR_LEN(map,option) map[option][STR_ARG_FLAG].strLen
+#define EXTRACT_STRING(map,option,str) str.substr(GET_STR_START(map,option),GET_STR_LEN(map,option))
+
+#define BUF_SIZE 20
+
+typedef struct {
+	bool set;
+	int intArg;
+	int strStart, strLen;
+} uOption;
+ 
+typedef std::map<char, std::map<char,uOption> > argMap;
+
+//bool nextChar(string &str, char &dest, int &index);
+void parseFlags(argMap &args, string &input, char argDelimit = '-');
 #endif // UTILITY_H_INCLUDED

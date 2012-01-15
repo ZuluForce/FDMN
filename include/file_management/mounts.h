@@ -23,6 +23,7 @@ class cMountSys {
 		~cMounts();
 
 		void setRoot(string&);
+		//bool newMount(string& location, )
 
 };
 

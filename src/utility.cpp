@@ -242,3 +242,127 @@ void cID_dispatch::ID_returnid_ts(int id) {
 	pthread_mutex_unlock( &ID_lock );
     return;
 }
+
+
+/* Options Flag Parser */
+bool nextChar(string &str, char &dest, int &index) {
+	if ( ++index >= str.size() )
+		return false;
+
+	dest = str[index];
+	return true;
+}
+
+bool isInt(char c) {
+	if ( c > '9' || c < '0' )
+		return false;
+
+	return true;
+}
+
+void parseArgs(argMap &args, string &input, char argDelimit = '-') {
+	int inIndex = -1;
+	bool accept_any;
+	char currentChar;
+
+	/* For parsing integer parameters */
+	char intBuf[BUF_SIZE];
+	int bufIndex = 0;
+
+	/* For parsing string parameters */
+	int start,slen;
+	start = slen = 0;
+
+	argMap inputMap;
+	argMap::iterator it;
+	std::map<char,uOption>::iterator extra_it;
+
+	while ( true ) {
+		if ( !nextChar(input,currentChar,inIndex) ) {
+			break;
+		}
+		
+		if ( currentChar != argDelimit )
+			throw ((string) "Missing argument delimiter before character " + currentChar);
+
+		if ( !nextChar(input,currentChar,inIndex) )
+			throw ((string) "Missing character flag for argument");
+
+		if ( (it = args.find(currentChar)) == args.end())
+			throw ((string) "Invalid argument " + currentChar);
+
+		(*it).second[argDelimit].set = true;
+
+		if ( (*it).second.find(' ') != (*it).second.end() )
+			accept_any = true;
+		
+		
+		while ( true ) {
+			if ( !nextChar(input,currentChar,inIndex) ||
+				currentChar == ' ' )
+				break;
+
+			if ( (extra_it = (*it).second.find(currentChar)) == (*it).second.end() &&
+				!accept_any)
+				throw ((string) "Extra arg '" + currentChar + "' is not valid");
+
+			(*extra_it).second.set = true;
+		}
+		
+		//Parse an integer parameter
+		if ( (*it).second.find(INT_ARG_FLAG) != (*it).second.end() ) {
+			if ( !nextChar(input,currentChar,inIndex) )
+				throw ((string) "Missing integer parameter for flag " + (*it).first);
+
+			if ( currentChar > '9' || currentChar < '0' )
+				throw ((string) "Parameter after " + (*it).first + " flag is not an integer.");
+
+			while ( true ) {
+				if ( bufIndex >= (BUF_SIZE - 1) )
+					throw ((string) "Not enough buffer space to parse integer");
+
+				intBuf[bufIndex++] = currentChar;
+				
+				if ( !nextChar(input,currentChar,inIndex) || currentChar == ' ' ) {
+					intBuf[bufIndex] = '\0';
+					(*it).second[INT_ARG_FLAG].intArg = atoi(intBuf);
+					break;
+				}
+				if ( !isInt(currentChar) )
+					throw ((string) "Encountered invalid character in parsing integer");
+			}
+			bufIndex = 0;
+			intBuf[0] = '\0';
+
+			//nextChar(input,currentChar,inIndex);
+		}
+
+		if ( (*it).second.find(STR_ARG_FLAG) != (*it).second.end() ) {
+			if ( !nextChar(input,currentChar,inIndex) || currentChar != '\"')
+				throw ((string) "Missing quotation for string parameter - flag " + (*it).first);
+	
+			start = inIndex + 1;
+			(*it).second[STR_ARG_FLAG].strStart = start;
+
+			while ( true ) {
+				if ( !nextChar(input,currentChar,inIndex) )
+					throw ((string) "Incomplete string parameter");
+
+				if ( currentChar == '\"' ) {
+					(*it).second[STR_ARG_FLAG].strLen = slen;
+					break;
+					
+				}
+				++slen;
+			}
+
+			start = slen = 0;
+
+			nextChar(input,currentChar,inIndex);
+		}
+		
+		accept_any = false;
+	}
+
+	return;
+}
