@@ -81,6 +81,7 @@ void eval_input(string input) {
     	EVAL_CASE('a',a);
     	EVAL_CASE('c',c);
     	EVAL_CASE('l',l);
+    	EVAL_CASE('m',m);
     	EVAL_CASE('s',s);
     	EVAL_CASE('t',t);
 

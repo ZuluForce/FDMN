@@ -177,9 +177,18 @@ typedef struct {
 	int intArg;
 	int strStart, strLen;
 } uOption;
- 
+
 typedef std::map<char, std::map<char,uOption> > argMap;
 
 //bool nextChar(string &str, char &dest, int &index);
 void parseFlags(argMap &args, string &input, char argDelimit = '-');
+void clearFlags(argMap &args);
+
+class staticOptions {
+	private:
+		argMap options;
+
+	public:
+		argMap& operator ()();
+};
 #endif // UTILITY_H_INCLUDED

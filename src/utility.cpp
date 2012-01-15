@@ -260,7 +260,7 @@ bool isInt(char c) {
 	return true;
 }
 
-void parseArgs(argMap &args, string &input, char argDelimit = '-') {
+void parseFlags(argMap &args, string &input, char argDelimit) {
 	int inIndex = -1;
 	bool accept_any;
 	char currentChar;
@@ -281,7 +281,7 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 		if ( !nextChar(input,currentChar,inIndex) ) {
 			break;
 		}
-		
+
 		if ( currentChar != argDelimit )
 			throw ((string) "Missing argument delimiter before character " + currentChar);
 
@@ -295,8 +295,8 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 
 		if ( (*it).second.find(' ') != (*it).second.end() )
 			accept_any = true;
-		
-		
+
+
 		while ( true ) {
 			if ( !nextChar(input,currentChar,inIndex) ||
 				currentChar == ' ' )
@@ -308,7 +308,7 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 
 			(*extra_it).second.set = true;
 		}
-		
+
 		//Parse an integer parameter
 		if ( (*it).second.find(INT_ARG_FLAG) != (*it).second.end() ) {
 			if ( !nextChar(input,currentChar,inIndex) )
@@ -322,7 +322,7 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 					throw ((string) "Not enough buffer space to parse integer");
 
 				intBuf[bufIndex++] = currentChar;
-				
+
 				if ( !nextChar(input,currentChar,inIndex) || currentChar == ' ' ) {
 					intBuf[bufIndex] = '\0';
 					(*it).second[INT_ARG_FLAG].intArg = atoi(intBuf);
@@ -340,7 +340,7 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 		if ( (*it).second.find(STR_ARG_FLAG) != (*it).second.end() ) {
 			if ( !nextChar(input,currentChar,inIndex) || currentChar != '\"')
 				throw ((string) "Missing quotation for string parameter - flag " + (*it).first);
-	
+
 			start = inIndex + 1;
 			(*it).second[STR_ARG_FLAG].strStart = start;
 
@@ -351,7 +351,7 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 				if ( currentChar == '\"' ) {
 					(*it).second[STR_ARG_FLAG].strLen = slen;
 					break;
-					
+
 				}
 				++slen;
 			}
@@ -360,9 +360,18 @@ void parseArgs(argMap &args, string &input, char argDelimit = '-') {
 
 			nextChar(input,currentChar,inIndex);
 		}
-		
+
 		accept_any = false;
 	}
 
 	return;
+}
+
+void clearFlags(argMap& flags) {
+
+	return;
+}
+
+argMap& staticOptions::operator ()() {
+	return options;
 }

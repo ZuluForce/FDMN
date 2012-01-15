@@ -21,7 +21,7 @@ SERVER_DEPS = interface.o server_core.o settings.o logging.o net_interface.o uti
 				request_mappings.o packets.o
 _SERVER_DEPS = $(patsubst %,$(OBJDIR)/%,$(SERVER_DEPS))
 
-CMD_OBJS = cmd_a.o cmd_c.o cmd_l.o cmd_s.o cmd_t.o
+CMD_OBJS = cmd_a.o cmd_c.o cmd_l.o cmd_m.o cmd_s.o cmd_t.o
 _CMD_OBJS = $(patsubst %,$(OBJDIR)/%, $(CMD_OBJS))
 
 MAIN_FLAGS = -DCOMP_MAIN
