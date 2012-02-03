@@ -58,7 +58,8 @@ void cNetInterface::init_net(int port) {
         string msg("Fatal Error: Failed to bind network socket (");
 		msg += strerror(errno);
 		msg += ")";
-		_log->log_simple( msg );
+		//_log->log_simple( msg );
+		_log->log_color(msg, redError);
 
 		/* Exit Server */
 		kill(getpid(), SIGINT);

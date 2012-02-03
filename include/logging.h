@@ -45,8 +45,13 @@ class cLog {
 
 		~cLog();
 
-		void log_simple(string message);
-		void log_color(string message, termOpts options[]);
+		void log_simple(string message); //Simple log entry with optional timestamp and given message
+
+		/* Will output message to terminal with the given options
+		 * and then will use log_simple to send the message to
+		 * the log.
+		 */
+		void log_color(string message, const termOpts options[]);
 		void log_block_msg(string block_msg);
 
 		void toggle_time(bool setting);

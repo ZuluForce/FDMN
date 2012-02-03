@@ -2,7 +2,7 @@
 
 CC=g++
 CFLAGS= -O3 -Iinclude -Ilib -D_REENTRANT
-LFLAGS = -lboost_thread -lpthread
+LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap
 
 SRCDIR = src
 INCDIR = include

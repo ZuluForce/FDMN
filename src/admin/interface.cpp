@@ -18,10 +18,18 @@ int start_admin() {
 	//bool auto_complete = INI_EXTRACT(Format,auto_complete);
 
 	string input;
+	char *inputBuf;
 
     while ( true ) {
-        cout << endl << ">> ";
-        getline(cin, input);
+        //cout << endl << ">> ";
+        //getline(cin, input);
+
+        inputBuf = readline("\n>> ");
+
+        if ( inputBuf && *inputBuf )
+        	add_history(inputBuf);
+
+		input = string(inputBuf);
 
         #ifdef DEBUG
         cout << "You entered: " << input << endl;
@@ -45,10 +53,17 @@ void* start_admin(void *args) {
 	}
 
 	string input;
+	char *inputBuf;
 
     while ( true ) {
-        cout << endl << ">> ";
-        getline(cin, input);
+        //cout << endl << ">> ";
+        //getline(cin, input);
+        inputBuf = readline("\n>>");
+
+        if ( inputBuf && *inputBuf )
+        	add_history(inputBuf);
+
+		input = string(inputBuf);
 
         #ifdef DEBUG
         cout << "You entered: " << input << endl;
@@ -87,7 +102,7 @@ void eval_input(string input) {
 
         default:
             cerr << "Invalid Command: ";
-            cerr <<input.substr(0,input.find_first_of(' '));
+            cerr << input.substr(0,input.find_first_of(' '));
             cerr << endl;
     }
     return;

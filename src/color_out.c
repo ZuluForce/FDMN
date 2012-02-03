@@ -3,7 +3,7 @@
 
 #include "color_out.h"
 
-int print_color(const char *str, termOpts options[], bool newline) {
+int print_color(const char *str, const termOpts options[], bool newline) {
 	char format_str[MAX_FORMAT_SIZE];
 
 	int i = 0;

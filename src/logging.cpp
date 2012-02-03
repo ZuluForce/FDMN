@@ -80,11 +80,11 @@ void cLog::log_simple(string message) {
 	return;
 }
 
-void cLog::log_color(string message, termOpts options[]) {
+void cLog::log_color(string message, const termOpts options[]) {
 	if ( color_prompt )
 		print_color(message.c_str(), options, true);
-	else
-		log_simple(message);
+
+	log_simple(message);
 
 	return;
 }

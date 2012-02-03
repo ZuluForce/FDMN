@@ -15,13 +15,10 @@
 #include <netdb.h>
 #include <ifaddrs.h> //For reporting ip addresses
 
-#ifndef THREADS_INCLUDED
-#define THREADS_INCLUDED
-
+/* Boost Libraries */
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
 
-#endif
 
 struct packet; //So inclusion of reqest_mappings works
 
@@ -39,6 +36,8 @@ struct packet; //So inclusion of reqest_mappings works
 //#define STR(x) #x
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
 #define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))
+
+static const termOpts redError[] = { cRed, EOO};
 
 class cProtocol {
 	public:

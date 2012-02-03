@@ -13,7 +13,6 @@ cSettings::cSettings(INIReader *ini) {
 }
 
 cSettings::cSettings(string filename) {
-	cout << "cSettings Initializer" << endl;
     ini_file = new INIReader(filename);
 
     initialized = true;

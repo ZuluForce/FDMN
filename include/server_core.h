@@ -66,6 +66,9 @@ class cServerCore {
         static string version() {
         	stringstream sVersion;
         	sVersion << "Server Core Version: " << SERVER_VERSION << endl;
+        	#ifdef __GNUG__
+        	sVersion << "Compiled With: g++ " << __VERSION__ << endl;
+        	#endif
         	sVersion << "Compiled On: " << __DATE__;
         	sVersion << " at " << __TIME__ << endl;
         	return sVersion.str();
