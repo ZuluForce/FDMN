@@ -46,6 +46,10 @@ void server_status(string cmd) {
 				sflags |= SF_UPTIME;
 				break;
 
+			case 'v':
+				sflags |= SF_VERSION;
+				break;
+
 			default:
 				cerr << "Invalid argument(" << cmd[opt_index + 1];
 				cerr << ") to status command" << endl;

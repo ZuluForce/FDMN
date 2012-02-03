@@ -152,23 +152,23 @@ void QuicksortVector(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType
 }
 
 
-/* Flag Parser */
-#define ADD_OPTION(map,x) map[x]
-#define ADD_EXTRA(map,option,extra) map[option][extra]
-#define ACCEPT_ANY_EXTRA(map,option) map[option][' ']
-#define OPTION_SET(map,option,delimit) map[option][delimit].set
-#define EXTRA_SET(map,option,extra) map[option][extra].set
+/* Flag Parser: Use this to parse command line flags */
+#define ADD_OPTION(map,x) map[x] 								//Adds a check for a flags such as '-x'
+#define ADD_EXTRA(map,option,extra) map[option][extra] 			//Adds and extra flag that can be group with an exisiting option, ie '-xa'
+#define ACCEPT_ANY_EXTRA(map,option) map[option][' '] 			//Accepts any extra flags that come after the matched option
+#define OPTION_SET(map,option,delimit) map[option][delimit].set //Was a given option flag encountered?
+#define EXTRA_SET(map,option,extra) map[option][extra].set		//Was this extra flag encountered for this option?
 
 #define INT_ARG_FLAG (char) 0
 #define STR_ARG_FLAG (char) 1
 
-#define ADD_INT_ARG(map,option) map[option][INT_ARG_FLAG]
-#define ADD_STR_ARG(map,option) map[option][STR_ARG_FLAG]
+#define ADD_INT_ARG(map,option) map[option][INT_ARG_FLAG] 	//Specifies a required integer argument to come after a flag
+#define ADD_STR_ARG(map,option) map[option][STR_ARG_FLAG]	//Specifies a required string argument to come after a flag
 
-#define GET_INT_ARG(map,option) map[option][INT_ARG_FLAG].intArg
-#define GET_STR_START(map,option) map[option][STR_ARG_FLAG].strStart
-#define GET_STR_LEN(map,option) map[option][STR_ARG_FLAG].strLen
-#define EXTRACT_STRING(map,option,str) str.substr(GET_STR_START(map,option),GET_STR_LEN(map,option))
+#define GET_INT_ARG(map,option) map[option][INT_ARG_FLAG].intArg		//Gets the integer argument for the option
+#define GET_STR_START(map,option) map[option][STR_ARG_FLAG].strStart	//Gets the start of the string argument
+#define GET_STR_LEN(map,option) map[option][STR_ARG_FLAG].strLen		//Gets the length of the string argument
+#define EXTRACT_STRING(map,option,str) str.substr(GET_STR_START(map,option),GET_STR_LEN(map,option))	//Extracts the substring for the string argument
 
 #define BUF_SIZE 20
 

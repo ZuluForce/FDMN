@@ -18,7 +18,7 @@ LIB_OBJS_WIN = iniReader_win_x86_64.o
 _LIB_OBJS_WIN = $(patsubst %,$(LIBDIR)/%, $(LIB_OBJS_WIN))
 
 SERVER_DEPS = interface.o server_core.o settings.o logging.o net_interface.o utility.o\
-				request_mappings.o packets.o
+				request_mappings.o packets.o color_out.o
 _SERVER_DEPS = $(patsubst %,$(OBJDIR)/%,$(SERVER_DEPS))
 
 CMD_OBJS = cmd_a.o cmd_c.o cmd_l.o cmd_m.o cmd_s.o cmd_t.o
@@ -32,6 +32,7 @@ vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/admin
 vpath %.cpp $(SRCDIR)/admin/cmd_bindings
 vpath %.cpp $(SRCDIR)/network
+vpath %.c $(SRCDIR)
 vpath %.c $(SRCDIR)/network
 
 vpath %.h $(INCDIR)
@@ -62,7 +63,7 @@ test_msg: test_msg.cpp test_msg.h packets.o
 	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS)
 
 %.o: %.c %.h
-	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS) -DDEBUG
+	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS)
 
 interface.o: interface.cpp interface.h $(CMD_OBJS)
 	$(CC) -c $< -o $(OBJDIR)/$@ $(CFLAGS)

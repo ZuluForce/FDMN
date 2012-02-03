@@ -60,6 +60,9 @@ void cServerCore::status(uint32_t flags, bool log) {
 	stringstream stream;
 	stream << "Sever Status Information:" << endl;
 
+	if ( flags & SF_VERSION ) {
+		stream << this->version() << endl;
+	}
 	if ( flags & SF_UPTIME ) {
 		time_t curr_time;
 		time( &curr_time );

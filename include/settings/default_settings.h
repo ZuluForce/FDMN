@@ -13,6 +13,7 @@ inline void setDefaults(INIReader *ini) {
 	ADD(Admin,log_timestamp,1);
 	ADD(Admin,verbosity,5);
 	ADD(Admin,close_monitor_exit,1);
+	ADD(Admin,color_prompt,0);
 
 	/* Formatting */
 	ADD(Format,time_style,1);

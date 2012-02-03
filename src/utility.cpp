@@ -244,7 +244,7 @@ void cID_dispatch::ID_returnid_ts(int id) {
 }
 
 
-/* Options Flag Parser */
+/* ====== Options Flag Parser ======*/
 bool nextChar(string &str, char &dest, int &index) {
 	if ( ++index >= str.size() )
 		return false;

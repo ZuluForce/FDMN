@@ -11,6 +11,7 @@
 #include <boost/thread/mutex.hpp>
 
 #include "settings.h"
+#include "color_out.h"
 
 #define STR(x) #x
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
@@ -25,6 +26,7 @@ class cLog {
 
 		/* Settings */
 		bool timestamp;
+		bool color_prompt;
 
 		/* Log Filename */
 		string log_file;
@@ -44,6 +46,7 @@ class cLog {
 		~cLog();
 
 		void log_simple(string message);
+		void log_color(string message, termOpts options[]);
 		void log_block_msg(string block_msg);
 
 		void toggle_time(bool setting);

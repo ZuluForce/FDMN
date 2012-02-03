@@ -20,6 +20,14 @@ cLog::cLog(string filename)
 			cout << "Log timestamping enabled" << endl;
 		else
 			cout << "Log timestamping disabled" << endl;
+
+		color_prompt = INI_EXTRACT(Admin, color_prompt, bool);
+
+		if ( color_prompt ) {
+			termOpts green_uline[] = {cGreen, eULine, EOO};
+			print_color("Color prompt is enabled", green_uline, true);
+			//cout << "Color prompt is enabled" << endl;
+		}
 	}
 
 	log_stream.open(filename.c_str(), ios::out | ios::trunc);
@@ -68,6 +76,15 @@ void cLog::log_simple(string message) {
 	log_stream << "[" << message << "]" << endl;
 
 	/* Add Mutex Locks */
+
+	return;
+}
+
+void cLog::log_color(string message, termOpts options[]) {
+	if ( color_prompt )
+		print_color(message.c_str(), options, true);
+	else
+		log_simple(message);
 
 	return;
 }

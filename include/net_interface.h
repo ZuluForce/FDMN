@@ -15,8 +15,13 @@
 #include <netdb.h>
 #include <ifaddrs.h> //For reporting ip addresses
 
+#ifndef THREADS_INCLUDED
+#define THREADS_INCLUDED
+
 #include <boost/thread.hpp>
 #include <boost/thread/mutex.hpp>
+
+#endif
 
 struct packet; //So inclusion of reqest_mappings works
 
