@@ -6,15 +6,11 @@
 #include "settings.h"
 #include "net_interface.h"
 #include "admin/interface.h"
+#include "file_management/mounts.h"
 
 /* Boost Thread Library */
-#ifndef THREADS_INCLUDED
-#define THREADS_INCLUDED
-
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
-
-#endif
 
 #include "settings/default_settings.h"
 #include "utility.h"
@@ -24,7 +20,7 @@
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
 #define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))
 
-#define SERVER_VERSION "0.0.1"
+#define SERVER_VERSION "0.0.2"
 
 enum {
 	SF_ALL = 0xFFFFFFFF,
@@ -46,6 +42,7 @@ class cServerCore {
     	cFDMNProtocol *protocol;
         cSettings *settings;
         cLog *log;
+        cMountSys *MountSys;
 
         cServerCore();
 

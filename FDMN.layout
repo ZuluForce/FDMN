@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="Makefile" open="1" top="0" tabpos="1">
+		<Cursor position="160" topLine="0" />
+	</File>
+	<File name="include/admin/cmd_bindings/cmd_s.h" open="0" top="0" tabpos="0">
+		<Cursor position="98" topLine="0" />
+	</File>
+	<File name="include/admin/interface.h" open="0" top="0" tabpos="0">
+		<Cursor position="259" topLine="0" />
+	</File>
+	<File name="include/color_out.h" open="0" top="0" tabpos="0">
+		<Cursor position="709" topLine="38" />
+	</File>
+	<File name="include/fdmn.h" open="0" top="0" tabpos="0">
+		<Cursor position="161" topLine="0" />
+	</File>
+	<File name="include/file_management/fs_util.h" open="1" top="1" tabpos="4">
+		<Cursor position="435" topLine="16" />
+	</File>
+	<File name="include/file_management/mounts.h" open="1" top="0" tabpos="2">
+		<Cursor position="571" topLine="4" />
+	</File>
+	<File name="include/logging.h" open="0" top="0" tabpos="0">
+		<Cursor position="1106" topLine="32" />
+	</File>
+	<File name="include/net_interface.h" open="0" top="0" tabpos="0">
+		<Cursor position="884" topLine="24" />
+	</File>
+	<File name="include/network/packets.h" open="0" top="0" tabpos="0">
+		<Cursor position="0" topLine="13" />
+	</File>
+	<File name="include/server_core.h" open="0" top="0" tabpos="0">
+		<Cursor position="1542" topLine="22" />
+	</File>
+	<File name="include/settings.h" open="0" top="0" tabpos="0">
+		<Cursor position="731" topLine="3" />
+	</File>
+	<File name="include/settings/default_settings.h" open="0" top="0" tabpos="0">
+		<Cursor position="437" topLine="0" />
+	</File>
+	<File name="include/utility.h" open="0" top="0" tabpos="0">
+		<Cursor position="4563" topLine="78" />
+	</File>
+	<File name="settings.ini" open="0" top="0" tabpos="0">
+		<Cursor position="123" topLine="0" />
+	</File>
+	<File name="src/admin/cmd_bindings/cmd_s.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="895" topLine="61" />
+	</File>
+	<File name="src/admin/interface.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="570" topLine="0" />
+	</File>
+	<File name="src/color_out.c" open="0" top="0" tabpos="0">
+		<Cursor position="2428" topLine="0" />
+	</File>
+	<File name="src/file_management/fs_util.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="1201" topLine="21" />
+	</File>
+	<File name="src/file_management/mounts.cpp" open="1" top="0" tabpos="5">
+		<Cursor position="0" topLine="0" />
+	</File>
+	<File name="src/logging.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1591" topLine="69" />
+	</File>
+	<File name="src/net_interface.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1414" topLine="39" />
+	</File>
+	<File name="src/server_core.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1364" topLine="33" />
+	</File>
+	<File name="src/settings.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="219" topLine="0" />
+	</File>
+	<File name="src/utility.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5262" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

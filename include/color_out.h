@@ -41,6 +41,10 @@ typedef enum enum_termOpts {
 	EOO
 } termOpts;
 
+/* Pre-Defined Sytles */
+const termOpts redError[] = { cRed, EOO};
+const termOpts redErrorStrong[] = { cRed, eBold, eULine, EOO};
+
 static const char* ANSI_ESC = "\033[";
 
 static const char* color_strings[] =
@@ -60,5 +64,8 @@ static const char* color_strings[] =
 
 
 int print_color(const char *str, const termOpts options[], bool newline);
+int print_color_file(const char *str, const termOpts options[], bool newline, FILE *file);
+char* makeColorString(const char *str, char *output, termOpts options[]);
+ssize_t find_end_length(const char *str, termOpts options[]);
 
 #endif // COLOR_OUT_H_INCLUDED

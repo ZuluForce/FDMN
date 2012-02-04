@@ -1,6 +1,7 @@
 #include "admin/cmd_bindings/cmd_m.h"
 
 extern cLog *_log;
+extern cMountSys *_mountsys;
 
 void mount_cmd(string cmd) {
 	static mountOptions options = mountOptions();
@@ -23,14 +24,23 @@ void mount_cmd(string cmd) {
 		return;
 	}
 
-	if ( OPTION_SET(mapOptions,'m','-') )
+	string location;
+
+	if ( OPTION_SET(mapOptions,'m','-') ) //Mount #
 		cout << "m flag set for mount_cmd" << endl;
 
-	if ( OPTION_SET(mapOptions,'n','-') )
+	if ( OPTION_SET(mapOptions,'n','-') ) //Mount name
 		cout << "n flag set for mount_cmd" << endl;
 
-	if ( OPTION_SET(mapOptions,'r','-') )
+	if ( OPTION_SET(mapOptions,'r','-') ) //Remote mount
 		cout << "r flag set for mount_cmd" << endl;
+
+	if ( OPTION_SET(mapOptions,'l','-') ) {
+		location = EXTRACT_STRING(mapOptions,'l',flags);
+		cout << "Location string: " << location << endl;
+	}
+
+	_mountsys->newMount(location);
 
 	clearFlags(mapOptions);
 	return;
@@ -54,13 +64,21 @@ void eval_cmd_m(string cmd) {
 /*---------Option Class Definitions-----------*/
 
 mountOptions::mountOptions() {
+	/* Non-Functional */
 	ADD_OPTION(options,'m');
 	ADD_INT_ARG(options,'m');
 
+	/* Location for mount */
+	ADD_OPTION(options,'l');
+	ADD_STR_ARG(options, 'l');
+
+	/* Optional Display Name */
 	ADD_OPTION(options,'n');
 	ADD_STR_ARG(options,'n');
 
+	/* It is a remote mount. Include network address. */
 	ADD_OPTION(options,'r');
+	ADD_STR_ARG(options, 'r');
 
 	return;
 }

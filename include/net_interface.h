@@ -37,7 +37,7 @@ struct packet; //So inclusion of reqest_mappings works
 #define INI_EXISTS(section,key) _settings->exists(STR(section), STR(key))
 #define INI_EXTRACT(section,key,type) _settings->extractValue<type>(STR(section),STR(key))
 
-static const termOpts redError[] = { cRed, EOO};
+//static const termOpts redError[] = { cRed, EOO};
 
 class cProtocol {
 	public:

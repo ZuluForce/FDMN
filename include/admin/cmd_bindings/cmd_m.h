@@ -6,6 +6,7 @@
 
 #include "logging.h"
 #include "utility.h"
+#include "file_management/mounts.h"
 
 using namespace std;
 

@@ -2,7 +2,7 @@
 
 CC=g++
 CFLAGS= -O3 -Iinclude -Ilib -D_REENTRANT
-LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap
+LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap -lboost_filesystem
 
 SRCDIR = src
 INCDIR = include
@@ -18,7 +18,7 @@ LIB_OBJS_WIN = iniReader_win_x86_64.o
 _LIB_OBJS_WIN = $(patsubst %,$(LIBDIR)/%, $(LIB_OBJS_WIN))
 
 SERVER_DEPS = interface.o server_core.o settings.o logging.o net_interface.o utility.o\
-				request_mappings.o packets.o color_out.o
+				request_mappings.o packets.o color_out.o fs_util.o mounts.o
 _SERVER_DEPS = $(patsubst %,$(OBJDIR)/%,$(SERVER_DEPS))
 
 CMD_OBJS = cmd_a.o cmd_c.o cmd_l.o cmd_m.o cmd_s.o cmd_t.o
@@ -30,15 +30,18 @@ vpath % $(BINDIR)
 
 vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/admin
-vpath %.cpp $(SRCDIR)/admin/cmd_bindings
 vpath %.cpp $(SRCDIR)/network
+vpath %.cpp $(SRCDIR)/file_management
+vpath %.cpp $(SRCDIR)/admin/cmd_bindings
+
 vpath %.c $(SRCDIR)
 vpath %.c $(SRCDIR)/network
 
 vpath %.h $(INCDIR)
 vpath %.h $(INCDIR)/admin
-vpath %.h $(INCDIR)/admin/cmd_bindings
 vpath %.h $(INCDIR)/network
+vpath %.h $(INCDIR)/file_management
+vpath %.h $(INCDIR)/admin/cmd_bindings
 
 vpath %.o $(LIBDIR)
 vpath %.o $(OBJDIR)

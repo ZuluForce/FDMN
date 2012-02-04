@@ -2,6 +2,7 @@
 
 cSettings *_settings;
 cLog *_log;
+cMountSys *_mountsys;
 
 cServerCore::cServerCore() {
 	/* Never will be called */
@@ -26,6 +27,10 @@ cServerCore::cServerCore(string settings_file) {
     protocol = new cFDMNProtocol();
     protocol->initQueue();
     network->set_protocol(protocol);
+
+    /* Create Mount System */
+    MountSys = new cMountSys();
+    _mountsys = MountSys;
 
     return;
 }
