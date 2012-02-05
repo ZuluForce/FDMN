@@ -39,6 +39,10 @@ void mount_cmd(string cmd) {
 		location = EXTRACT_STRING(mapOptions,'l',flags);
 		cout << "Location string: " << location << endl;
 	}
+	if ( OPTION_SET(mapOptions,'p','-') ) {
+		_mountsys->printMounts();
+		return;
+	}
 
 	_mountsys->newMount(location);
 
@@ -79,6 +83,9 @@ mountOptions::mountOptions() {
 	/* It is a remote mount. Include network address. */
 	ADD_OPTION(options,'r');
 	ADD_STR_ARG(options, 'r');
+
+	/* Prints out the current mounts */
+	ADD_OPTION(options,'p');
 
 	return;
 }

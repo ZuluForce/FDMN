@@ -25,6 +25,8 @@ There are other targets for building windows executables under mingw but the pro
 ###Dependencies
 ####Server
 * Boost::Threads
+* GNU Readline library
+* Google-Breakpad
 * Unix OS (Tested on Ubuntu 11.04)
 * Tested with gcc compiler but no specific GNU C features are being used
 

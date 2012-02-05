@@ -1,8 +1,8 @@
 ##Makefile for Frugal Distributed Media Network Server##
 
 CC=g++
-CFLAGS= -O3 -Iinclude -Ilib -D_REENTRANT
-LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap -lboost_filesystem
+CFLAGS= -O3 -Iinclude -Ilib -D_REENTRANT -rdynamic
+LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap -lboost_filesystem -lbreakpad_client
 
 SRCDIR = src
 INCDIR = include

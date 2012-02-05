@@ -5,6 +5,10 @@
 #include <iostream>
 #include <string>
 #include "boost/filesystem.hpp"
+#include "color_out.h"
+
+#define MAX_REC_DEPTH 30
+#define MAX_REC_PRINT 10
 
 using namespace std;
 using namespace boost;
@@ -22,28 +26,58 @@ enum eFileType {
 	FT_NONE //Sentinel value
 };
 
-class absFileInfo {
+class AttrVector {
 	private:
-		vector<fileAttrs> Attrs;
+		vector<fileAttrs> attributes;
 
 	public:
-		/* The function iterating over the FS will send
-		 * the info specified to the fileInfo object */
-		virtual vector<fileAttrs>& getAttrs() __attribute__((warning("Should not use base absFileInfo class")));
-
-		/* Functions called to fill in information */
-		static void setPath(absFileInfo&, string) __attribute__((warning("Should not use base absFileInfo class")));
-		static void setPath(absFileInfo&, filesystem::path&) __attribute__((warning("Should not use base absFileInfo class")));
-		static void setSize(absFileInfo&, ssize_t size) __attribute__((warning("Should not use base absFileInfo class")));
-		static void setType(absFileInfo&,eFileType) __attribute__((warning("Should not use base absFileInfo class")));
-
-		/* Add file/directory entry */
-		//Should return ref to new obj so info can be set
-		static absFileInfo* addFile(absFileInfo&, eFileType) __attribute__((warning("Should not use base absFileInfo class")));
+		AttrVector();
+		vector<fileAttrs>& getVector();
 };
 
-void fillFfileInfo(absFileInfo& infoObj, string startPath);
-void fillFileInfo(absFileInfo& infoObj, filesystem::path startPath);
-void callFileSetters(absFileInfo& infoObj, filesystem::path& currPath);
+//Used by cMountInfo
+static AttrVector MountAttributes;
+
+const termOpts directoryColor[] = { cBlue, eULine, EOO};
+const termOpts fileColor[] = { cGreen, eULine, EOO};
+const termOpts pathColor[] = { cCyan, EOO};
+
+class cMountInfo {
+	protected:
+		eFileType entryType;
+		filesystem::path entryPath;
+		ssize_t entrySize;
+
+		vector<cMountInfo*> regularFiles;
+		vector<cMountInfo*> directories;
+
+		static inline void printIndent(int level);
+
+	public:
+		cMountInfo();
+		~cMountInfo();
+
+		vector<fileAttrs>& getAttrs();
+
+		static void setPath(cMountInfo&, string path);
+		static void setPath(cMountInfo&, filesystem::path path);
+		static void setSize(cMountInfo&, ssize_t size);
+		static void setType(cMountInfo&, eFileType type);
+
+		static cMountInfo* addFile(cMountInfo&, eFileType);
+
+		void addRegular(cMountInfo*);
+		void addDir(cMountInfo*);
+
+		void printContent(int indentLvl = 0);
+		int numberFiles(eFileType);
+
+		filesystem::path& getPath();
+
+};
+
+void fillFileInfo(cMountInfo& infoObj, string startPath);
+void fillFileInfo(cMountInfo& infoObj, filesystem::path startPath);
+void callFileSetters(cMountInfo& infoObj, filesystem::path& currPath, eFileType type);
 
 #endif // FS_UTIL_H_INCLUDED
