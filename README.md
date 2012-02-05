@@ -26,9 +26,7 @@ There are other targets for building windows executables under mingw but the pro
 ####Server
 * Boost::Threads
 * GNU Readline library
-* Google-Breakpad
-* Unix OS (Tested on Ubuntu 11.04)
-* Tested with gcc compiler but no specific GNU C features are being used
+* Unix OS (Tested on Ubuntu 11.04 with g++)
 
 ####Client
 * Python 3 or higher
@@ -43,7 +41,7 @@ So far I have been building the framework of the server without the network func
 	
 ####To-Do
 	* Create message protocol
-	* Create "mount" system for mapping distributed files to one node
+	* Create "mount" system for mapping distributed files to one node (in-progress)
 	* Rewrite older code to make it cross-platform with Windows (maybe Mac but I don't have one to test on)
 
 ###Client
