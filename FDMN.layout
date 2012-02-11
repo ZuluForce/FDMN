@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Release" />
-	<File name="Makefile" open="1" top="0" tabpos="7">
+	<File name="Makefile" open="0" top="0" tabpos="7">
 		<Cursor position="610" topLine="0" />
 	</File>
 	<File name="include/admin/cmd_bindings/cmd_s.h" open="0" top="0" tabpos="0">
@@ -11,31 +11,31 @@
 		<Cursor position="259" topLine="0" />
 	</File>
 	<File name="include/color_out.h" open="0" top="0" tabpos="0">
-		<Cursor position="709" topLine="38" />
+		<Cursor position="510" topLine="11" />
 	</File>
-	<File name="include/fdmn.h" open="1" top="0" tabpos="5">
+	<File name="include/fdmn.h" open="0" top="0" tabpos="5">
 		<Cursor position="239" topLine="0" />
 	</File>
-	<File name="include/file_management/fs_util.h" open="1" top="0" tabpos="3">
-		<Cursor position="54" topLine="39" />
+	<File name="include/file_management/fs_util.h" open="0" top="0" tabpos="3">
+		<Cursor position="1292" topLine="46" />
 	</File>
-	<File name="include/file_management/mounts.h" open="1" top="0" tabpos="1">
-		<Cursor position="266" topLine="6" />
+	<File name="include/file_management/mounts.h" open="0" top="0" tabpos="1">
+		<Cursor position="596" topLine="7" />
 	</File>
 	<File name="include/logging.h" open="0" top="0" tabpos="0">
-		<Cursor position="1106" topLine="32" />
+		<Cursor position="1106" topLine="21" />
 	</File>
 	<File name="include/net_interface.h" open="0" top="0" tabpos="0">
-		<Cursor position="884" topLine="24" />
+		<Cursor position="884" topLine="27" />
 	</File>
 	<File name="include/network/packets.h" open="0" top="0" tabpos="0">
-		<Cursor position="0" topLine="13" />
+		<Cursor position="0" topLine="6" />
 	</File>
 	<File name="include/server_core.h" open="0" top="0" tabpos="0">
 		<Cursor position="1542" topLine="22" />
 	</File>
 	<File name="include/settings.h" open="0" top="0" tabpos="0">
-		<Cursor position="731" topLine="3" />
+		<Cursor position="731" topLine="0" />
 	</File>
 	<File name="include/settings/default_settings.h" open="0" top="0" tabpos="0">
 		<Cursor position="437" topLine="0" />
@@ -46,6 +46,9 @@
 	<File name="settings.ini" open="0" top="0" tabpos="0">
 		<Cursor position="123" topLine="0" />
 	</File>
+	<File name="src/admin/cmd_bindings/cmd_m.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="1090" topLine="21" />
+	</File>
 	<File name="src/admin/cmd_bindings/cmd_s.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="895" topLine="61" />
 	</File>
@@ -55,20 +58,23 @@
 	<File name="src/color_out.c" open="0" top="0" tabpos="0">
 		<Cursor position="2428" topLine="0" />
 	</File>
-	<File name="src/fdmn.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="1114" topLine="40" />
+	<File name="src/fdmn.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="1114" topLine="49" />
 	</File>
-	<File name="src/file_management/fs_util.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="935" topLine="22" />
+	<File name="src/file_management/fs_util.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="4470" topLine="195" />
 	</File>
-	<File name="src/file_management/mounts.cpp" open="1" top="1" tabpos="4">
-		<Cursor position="885" topLine="32" />
+	<File name="src/file_management/mounts.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="1562" topLine="54" />
 	</File>
 	<File name="src/logging.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1591" topLine="69" />
+		<Cursor position="1591" topLine="30" />
 	</File>
 	<File name="src/net_interface.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1414" topLine="39" />
+		<Cursor position="5931" topLine="252" />
+	</File>
+	<File name="src/network/request_mappings.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="323" topLine="0" />
 	</File>
 	<File name="src/server_core.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1364" topLine="33" />

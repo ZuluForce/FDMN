@@ -150,6 +150,13 @@ int cMountInfo::numberFiles(eFileType type) {
 	}
 }
 
+void cMountInfo::sortMounts(cMountInfo& mount) {
+	QuicksortVector<cMountInfo*>(mount.regularFiles, sortPathForward, pivotMiddle, 0, mount.regularFiles.size() - 1);
+	QuicksortVector<cMountInfo*>(mount.directories, sortPathForward, pivotMiddle, 0, mount.directories.size() - 1);
+
+	return;
+}
+
 filesystem::path& cMountInfo::getPath() {
 	return entryPath;
 }
@@ -225,3 +232,33 @@ void callFileSetters(cMountInfo& infoObj, filesystem::path& currPath, eFileType 
 		}
 	}
 }
+
+/* ======== For sorting cMount information ======== */
+int sortPathForward( cMountInfo* path1, cMountInfo* path2) {
+	if ( path1 == NULL || path2 == NULL )
+		throw ((string) "Null pointer passed to sortPathForward");
+
+	cout << "Inside sortPathForward" << endl;
+
+	cout << "Getting string for path1" << endl;
+	const string sPath1 = path1->entryPath.filename();
+	cout << "Getting string for path2" << endl;
+	const string sPath2 = path2->entryPath.filename();
+
+	cout << "sPath1 = " << sPath1 << endl;
+	cout << "sPath2 = " << sPath2 << endl;
+
+	int compVal = sPath1.compare(sPath2);
+	cout << "compVal = " << compVal << endl;
+
+	if ( compVal == 0 ) {
+		return 0;
+	}
+	if ( compVal > 0 ) {
+		return -1;
+	}
+	if ( compVal < 0 ) {
+		return 1;
+	}
+}
+

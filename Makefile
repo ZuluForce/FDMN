@@ -53,6 +53,7 @@ fdmn_server: fdmn.cpp fdmn.h $(SERVER_DEPS)
 fdmn_server_debug:
 	make LIB_OBJS='iniReader_linux_x86_64_debug.o'
 
+##Currently doesn't work
 fdmn_server_win: fdmn.cpp fdmn.h $(SERVER_DEPS)
 	$(CC) $(SRCDIR)/fdmn.cpp $(CFLAGS) $(_SERVER_DEPS) $(_CMD_OBJS) $(_LIB_OBJS_WIN) -o $(BINDIR)/$@
 
@@ -77,6 +78,9 @@ run_server: fdmn_server
 run_server_win: fdmn_server_win
 	bin\$^.exe settings.ini
 
+update_docs:
+	doxygen Doxyfile
+	
 clean:
 	rm -f $(BINDIR)/fdmn_server
 	rm -f $(OBJDIR)/*.o

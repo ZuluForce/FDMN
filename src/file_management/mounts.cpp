@@ -65,6 +65,7 @@ bool cMountSys::newMount(string location) {
 	mounts[newID]->printContent();
 	cout << "Finished indexing mount " << newID << endl;
 	cout << "There are " << mounts[newID]->numberFiles(FT_REG) << " files in the new mount" << endl;
+	//cMountInfo::sortMounts(*mounts[newID]); //Sort the files and directories
 
 	return false;
 }

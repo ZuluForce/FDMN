@@ -266,6 +266,7 @@ void cFDMNProtocol::listen() {
 
 		//Handle the request
 		switch (_pack->request) {
+			//Look in network/request_mappings for these handlers
 			case eSTAT:
 				STAT_request( _pack );
 				break;

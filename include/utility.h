@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string>
 #include <sstream>
+#include <iostream>
 #include <vector>
 #include <map>
 #include <limits.h>
@@ -90,18 +91,20 @@ typedef class cID_dispatch {
 template <typename T>
 void QuickPartition(std::vector<T> items, int (*sort_fn) (T,T),
 					int left, int right, int pivot) {
-
 	T temp;
 	T pivotValue = items[pivot];
 
+	/* Move pivot to the end of the section */
 	temp = items[right];
 	items[right] = pivotValue;
 	items[pivot] = temp;
 
 	int placeIndex = left;
 	for (int i = left; i < right; ++i) {
+		cout << "i = " << i << endl;
 		if (sort_fn(items[i], pivotValue) == 1) {
 			/* Swap the values */
+			cout << "Swapping index " << i << " and " << placeIndex << endl;
 			temp = items[i];
 			items[i] = items[placeIndex];
 			items[placeIndex] = temp;
@@ -128,17 +131,19 @@ enum pivotType {
 template <typename T>
 void QuicksortVector(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType,
 						int start, int end) {
-	if ( (end - start) <= 1 )
+	if ( (end - start + 1) <= 1 )
 		return;
 	int pivot;
 
 	switch ( pType ) {
 		case pivotMiddle:
 			pivot = (start + end) / 2;
+			cout << "Pivot point = " << pivot << endl;
 			break;
 
 		case pivotRandom:
 			pivot = start + (rand() % (start - end));
+			cout << "Pivot point = " << pivot << endl;
 			break;
 
 		default:
@@ -146,8 +151,8 @@ void QuicksortVector(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType
 	}
 
 	QuickPartition<T>(items, sort_fn, start, end, pivot);
-	QuicksortVector<T>(items, sort_fn, pType, start, pivot - 1);
-	QuicksortVector<T>(items, sort_fn, pType, start, pivot + 1);
+	QuicksortVector<T>(items, sort_fn, pType, start, pivot);
+	QuicksortVector<T>(items, sort_fn, pType, pivot + 1, end);
 	return;
 }
 

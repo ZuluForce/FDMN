@@ -4,8 +4,11 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
-#include "boost/filesystem.hpp"
+
 #include "color_out.h"
+#include "utility.h"
+
+#include "boost/filesystem.hpp"
 
 #define MAX_REC_DEPTH 30
 #define MAX_REC_PRINT 10
@@ -44,9 +47,6 @@ const termOpts pathColor[] = { cCyan, EOO};
 
 class cMountInfo {
 	protected:
-		eFileType entryType;
-		filesystem::path entryPath;
-		ssize_t entrySize;
 
 		vector<cMountInfo*> regularFiles;
 		vector<cMountInfo*> directories;
@@ -57,14 +57,22 @@ class cMountInfo {
 		cMountInfo();
 		~cMountInfo();
 
+		eFileType entryType;
+		filesystem::path entryPath;
+		ssize_t entrySize;
+
 		vector<fileAttrs>& getAttrs();
 
+		/* ------ Static Functions ------ */
 		static void setPath(cMountInfo&, string path);
 		static void setPath(cMountInfo&, filesystem::path path);
 		static void setSize(cMountInfo&, ssize_t size);
 		static void setType(cMountInfo&, eFileType type);
 
 		static cMountInfo* addFile(cMountInfo&, eFileType);
+
+		static void sortMounts(cMountInfo&);
+		/* ------------------------------ */
 
 		void addRegular(cMountInfo*);
 		void addDir(cMountInfo*);
@@ -79,5 +87,8 @@ class cMountInfo {
 void fillFileInfo(cMountInfo& infoObj, string startPath);
 void fillFileInfo(cMountInfo& infoObj, filesystem::path startPath);
 void callFileSetters(cMountInfo& infoObj, filesystem::path& currPath, eFileType type);
+
+/* Used as the function parameter to quicksort */
+int sortPathForward( cMountInfo* path1, cMountInfo* path2);
 
 #endif // FS_UTIL_H_INCLUDED
