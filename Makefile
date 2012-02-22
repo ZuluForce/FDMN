@@ -2,7 +2,7 @@
 
 CC=g++
 CFLAGS= -O3 -Iinclude -Ilib -D_REENTRANT -rdynamic
-LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap -lboost_filesystem -lbreakpad_client
+LFLAGS = -lboost_thread -lpthread -lreadline -ltermcap -lboost_filesystem -lbreakpad_client -L$(LIBDIR)
 
 SRCDIR = src
 INCDIR = include
