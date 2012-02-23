@@ -9,6 +9,7 @@
 #include "utility.h"
 
 #include "boost/filesystem.hpp"
+#include "boost/algorithm/string.hpp"
 
 #define MAX_REC_DEPTH 30
 #define MAX_REC_PRINT 10

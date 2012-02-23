@@ -89,33 +89,36 @@ typedef class cID_dispatch {
  * 1  : Reverse order (will be switched)
  */
 template <typename T>
-void QuickPartition(std::vector<T> items, int (*sort_fn) (T,T),
+void QuickPartition(std::vector<T>& items, int (*sort_fn) (T,T),
 					int left, int right, int pivot) {
 	T temp;
-	T pivotValue = items[pivot];
+	T pivotValue = items.at(pivot);
 
-	/* Move pivot to the end of the section */
-	temp = items[right];
-	items[right] = pivotValue;
-	items[pivot] = temp;
+	/* Move pivot to the end of the section, swapping values */
+	temp = items.at(right);
+	items.at(right) = pivotValue;
+	items.at(pivot) = temp;
 
+	/* This is the index where items are moved to
+	 * if they are less than the pivot value. As
+	 * items are shited this will move */
 	int placeIndex = left;
 	for (int i = left; i < right; ++i) {
 		cout << "i = " << i << endl;
-		if (sort_fn(items[i], pivotValue) == 1) {
+		if (sort_fn(items.at(i), pivotValue) == 1) {
 			/* Swap the values */
-			cout << "Swapping index " << i << " and " << placeIndex << endl;
-			temp = items[i];
-			items[i] = items[placeIndex];
-			items[placeIndex] = temp;
+			//cout << "Swapping index " << i << " and " << placeIndex << endl;
+			temp = items.at(i);
+			items.at(i) = items.at(placeIndex);
+			items.at(placeIndex) = temp;
 
 			++placeIndex;
 		}
 	}
 
 	/* Put pivot into correct location */
-	items[right] = items[placeIndex];
-	items[placeIndex] = pivotValue;
+	items.at(right) = items.at(placeIndex);
+	items.at(placeIndex) = pivotValue;
 
 	return;
 }
@@ -129,21 +132,23 @@ enum pivotType {
  * Uses in-place partitioning for better cache performance
  */
 template <typename T>
-void QuicksortVector(std::vector<T> items, int (*sort_fn) (T,T), pivotType pType,
+void QuicksortVector(std::vector<T>& items, int (*sort_fn) (T,T), pivotType pType,
 						int start, int end) {
+	/* Start and end are the index ranges to sort, inclusive */
 	if ( (end - start + 1) <= 1 )
 		return;
+
 	int pivot;
 
 	switch ( pType ) {
 		case pivotMiddle:
 			pivot = (start + end) / 2;
-			cout << "Pivot point = " << pivot << endl;
+			//cout << "Pivot point = " << pivot << endl;
 			break;
 
 		case pivotRandom:
 			pivot = start + (rand() % (start - end));
-			cout << "Pivot point = " << pivot << endl;
+			//cout << "Pivot point = " << pivot << endl;
 			break;
 
 		default:

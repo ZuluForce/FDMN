@@ -127,7 +127,7 @@ void cMountInfo::printContent(int indentLvl) {
 			printIndent(indentLvl);
 
 			cout << (*dir_it)->entryPath << endl;
-			(*dir_it)->printContent(++indentLvl);
+			(*dir_it)->printContent(indentLvl + 1);
 		}
 	}
 }
@@ -174,7 +174,7 @@ void fillFileInfo(cMountInfo& infoObj, filesystem::path startPath) {
 	cMountInfo *newFileEntry;
 	eFileType fType = FT_NONE;
 
-	try {
+	//try {
 	/* Iterate through everything in the directory */
 	for ( filesystem::directory_iterator pos(startPath); pos != end; ++pos) {
 		cout << "Path: " << *pos << endl;
@@ -201,9 +201,9 @@ void fillFileInfo(cMountInfo& infoObj, filesystem::path startPath) {
 
 		fType = FT_NONE;
 	}
-	} catch (filesystem::filesystem_error error) {
-		cerr << "Error in fillFileInfo: " << error.what();
-	}
+	//} catch (filesystem::filesystem_error error) {
+	//	cerr << "Error in fillFileInfo: " << error.what();
+	//}
 
 	return;
 }
@@ -241,9 +241,16 @@ int sortPathForward( cMountInfo* path1, cMountInfo* path2) {
 	cout << "Inside sortPathForward" << endl;
 
 	cout << "Getting string for path1" << endl;
-	const string sPath1 = path1->entryPath.filename();
+	string sPath1 = path1->entryPath.filename();
 	cout << "Getting string for path2" << endl;
-	const string sPath2 = path2->entryPath.filename();
+	string sPath2 = path2->entryPath.filename();
+
+	boost::algorithm::to_lower(sPath1);
+	boost::algorithm::to_lower(sPath2);
+
+	//To lowercase using std library
+	//std::transform(sPath1.begin(), sPath1.end(), sPath1.begin(), ::tolower);
+	//std::transform(sPath2.begin(), sPath2.end(), sPath2.begin(), ::tolower);
 
 	cout << "sPath1 = " << sPath1 << endl;
 	cout << "sPath2 = " << sPath2 << endl;

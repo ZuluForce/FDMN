@@ -44,6 +44,7 @@
 		<Unit filename="include/admin/cmd_bindings/all_cmds.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_a.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_c.h" />
+		<Unit filename="include/admin/cmd_bindings/cmd_h.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_l.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_m.h" />
 		<Unit filename="include/admin/cmd_bindings/cmd_s.h" />
@@ -68,6 +69,7 @@
 		<Unit filename="settings.ini" />
 		<Unit filename="src/admin/cmd_bindings/cmd_a.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_c.cpp" />
+		<Unit filename="src/admin/cmd_bindings/cmd_h.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_l.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_m.cpp" />
 		<Unit filename="src/admin/cmd_bindings/cmd_s.cpp" />
