@@ -48,7 +48,8 @@ bool cMountSys::newMount(string location) {
 	mounts[newID] = newMountInfo;
 
 	try {
-		fillFileInfo(*newMountInfo, filesystem::path( location ));
+		filesystem::path newPath(location);
+		fillFileInfo(*newMountInfo, newPath);
 	} catch (boost::filesystem::filesystem_error error) {
 		string err_msg = "Failed to build mount information object: \n\tError: ";
 		err_msg += error.what();
@@ -64,8 +65,12 @@ bool cMountSys::newMount(string location) {
 
 	cMountInfo::sortMounts(*mounts[newID]); //Sort the files and directories
 	mounts[newID]->printContent();
+	cMountInfo* mount = mounts[newID];
 	cout << "Finished indexing mount " << newID << endl;
-	cout << "There are " << mounts[newID]->numberFiles(FT_REG) << " files in the new mount" << endl;
+	//cout << "There are " << mounts[newID]->numberFiles(FT_REG) << " files in the new mount" << endl;
+	cout << "Mount " << newID << " has " << cMountInfo::getSubFiles(*mount);
+	cout << " in " << cMountInfo::getSubDirs(*mount) << " directories" << endl;
+	cout << "The new mount contains " << cMountInfo::getSubSize(*mount) << " bytes of data" << endl;
 
 	return false;
 }

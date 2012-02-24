@@ -7,6 +7,7 @@
 
 #include "color_out.h"
 #include "utility.h"
+#include "logging.h"
 
 #include "boost/filesystem.hpp"
 #include "boost/algorithm/string.hpp"
@@ -17,9 +18,16 @@
 using namespace std;
 using namespace boost;
 
+/** Assigned to a cMountInfo object to determine desired info
+ *
+ *	When a cMountInfo object is filled with file/directory entries
+ *	you can specify what attributes you want to save by adding
+ *	these flags to the classes attribute vector.
+ */
 enum fileAttrs {
 	FA_PATH,
 	FA_SIZE,
+	FA_DIRSIZE
 };
 
 enum eFileType {
@@ -27,6 +35,7 @@ enum eFileType {
 	FT_DIR,
 	FT_SYM,
 	FT_OTH,
+	FT_ALL, /**< Only used in functions like cMountInfo::numberFiles */
 	FT_NONE //Sentinel value
 };
 
@@ -54,6 +63,17 @@ class cMountInfo {
 
 		static inline void printIndent(int level);
 
+		/** This is the sum of this directories files
+		 *	plus those of all subdirectories.
+		 */
+		int subFiles;
+
+		/** The number of directories under this one. */
+		int subDirs;
+
+		/** Total size of index files/direcotires below here */
+		uint64_t subSize;
+
 	public:
 		cMountInfo();
 		~cMountInfo();
@@ -69,6 +89,13 @@ class cMountInfo {
 		static void setPath(cMountInfo&, filesystem::path path);
 		static void setSize(cMountInfo&, ssize_t size);
 		static void setType(cMountInfo&, eFileType type);
+		static void setSubFiles(cMountInfo&, int);
+		static void setSubDirs(cMountInfo&, int);
+		static void setSubSize(cMountInfo&, uint64_t);
+
+		static int getSubFiles(cMountInfo&);
+		static int getSubDirs(cMountInfo&);
+		static uint64_t getSubSize(cMountInfo&);
 
 		static cMountInfo* addFile(cMountInfo&, eFileType);
 
@@ -83,11 +110,46 @@ class cMountInfo {
 
 		filesystem::path& getPath();
 
+		class iterator {
+			protected:
+				int i;
+				cMountInfo* infoInstance;
+
+			public:
+				iterator();
+				iterator(cMountInfo*, int);
+
+				iterator& operator++() {
+					++i;
+
+					return *this;
+				}
+
+				cMountInfo* operator*() {
+					return infoInstance->directories.at(i);
+				}
+
+				bool operator==(const iterator& iter) {
+					/* This only checks that the indexes are the same.
+					 * Later I should also check that iter.infoInstance
+					 * is the same to this->infoInstance
+					 */
+					return iter.i == this->i ? true : false;
+				}
+
+				bool operator!=(const iterator& iter) {
+					return iter.i == this->i ? false : true;
+				}
+		};
+
+		cMountInfo::iterator begin();
+		cMountInfo::iterator end();
+
 };
 
 void fillFileInfo(cMountInfo& infoObj, string startPath);
-void fillFileInfo(cMountInfo& infoObj, filesystem::path startPath);
-void callFileSetters(cMountInfo& infoObj, filesystem::path& currPath, eFileType type);
+void fillFileInfo(cMountInfo& infoObj, filesystem::path& startPath, bool recursive = true);
+void callFileSetters(cMountInfo& infoObj, filesystem::path& currPath, eFileType type, uint64_t& size);
 
 /* Used as the function parameter to quicksort */
 int sortPathForward( cMountInfo* path1, cMountInfo* path2);

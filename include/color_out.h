@@ -44,6 +44,8 @@ typedef enum enum_termOpts {
 /* Pre-Defined Sytles */
 const termOpts redError[] = { cRed, EOO};
 const termOpts redErrorStrong[] = { cRed, eBold, eULine, EOO};
+const termOpts yellowWarn[] = { cYellow, EOO };
+const termOpts yellowWarnStrong[] = {cYellow, eULine, EOO};
 
 static const char* ANSI_ESC = "\033[";
 
