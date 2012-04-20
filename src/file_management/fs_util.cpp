@@ -279,7 +279,7 @@ void fillFileInfo(cMountInfo& infoObj, filesystem::path& startPath, bool recursi
 
 	cMountInfo::iterator it;
 	if ( recursive ) {
-		_log->log_color("Scanning subdirectory", yellowWarn);
+		//_log->log_color("Scanning subdirectory", yellowWarn);
 
 		//Loop through all the directories in the current infoObj
 		//and recursively calls fillFileInfo to index the whole
@@ -300,16 +300,12 @@ void fillFileInfo(cMountInfo& infoObj, filesystem::path& startPath, bool recursi
 		 * directories.
 		 */
 		subDirs += cMountInfo::getSubDirs(**it);
-		//subDirs += (*it)->numberFiles(FT_DIR);
 
 		/* Get files in sub-directories + the ones
 		 * in the current directory */
 		subFiles += cMountInfo::getSubFiles(**it);
-		//subFiles += (*it)->numberFiles(FT_REG);
 
 		subSize += cMountInfo::getSubSize(**it);
-
-		//subSize += (*it)->getSubSize();
 	}
 
 	subDirs += infoObj.numberFiles(FT_DIR);
@@ -359,11 +355,11 @@ int sortPathForward( cMountInfo* path1, cMountInfo* path2) {
 	if ( path1 == NULL || path2 == NULL )
 		throw ((string) "Null pointer passed to sortPathForward");
 
-	cout << "Inside sortPathForward" << endl;
+	//cout << "Inside sortPathForward" << endl;
 
-	cout << "Getting string for path1" << endl;
+	//cout << "Getting string for path1" << endl;
 	string sPath1 = path1->entryPath.filename();
-	cout << "Getting string for path2" << endl;
+	//cout << "Getting string for path2" << endl;
 	string sPath2 = path2->entryPath.filename();
 
 	boost::algorithm::to_lower(sPath1);
@@ -373,11 +369,11 @@ int sortPathForward( cMountInfo* path1, cMountInfo* path2) {
 	//std::transform(sPath1.begin(), sPath1.end(), sPath1.begin(), ::tolower);
 	//std::transform(sPath2.begin(), sPath2.end(), sPath2.begin(), ::tolower);
 
-	cout << "sPath1 = " << sPath1 << endl;
-	cout << "sPath2 = " << sPath2 << endl;
+	//cout << "sPath1 = " << sPath1 << endl;
+	//cout << "sPath2 = " << sPath2 << endl;
 
 	int compVal = sPath1.compare(sPath2);
-	cout << "compVal = " << compVal << endl;
+	//cout << "compVal = " << compVal << endl;
 
 	if ( compVal == 0 ) {
 		return 0;

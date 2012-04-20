@@ -67,6 +67,7 @@ void cServerCore::status(uint32_t flags, bool log) {
 
 	if ( flags & SF_VERSION ) {
 		stream << this->version() << endl;
+		stream << "Mount System Version: " << _mountsys->version() << endl;
 	}
 	if ( flags & SF_UPTIME ) {
 		time_t curr_time;
@@ -76,12 +77,15 @@ void cServerCore::status(uint32_t flags, bool log) {
 		stream << sec_to_time(difftime(curr_time,start_time),
 								INI_EXTRACT(Format,time_style,int)) << endl;
 	}
+	if ( flags & SF_SETTINGS ) {
+		settings->status(stream);
+	}
 	if ( flags & SF_NETWORK ) {
 		network->status(stream);
 		protocol->status(stream);
 	}
-	if ( flags & SF_SETTINGS ) {
-		settings->status(stream);
+	if ( flags & SF_MOUNTS ) {
+		_mountsys->status(stream);
 	}
 
 	if ( log )

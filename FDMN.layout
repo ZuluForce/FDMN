@@ -7,6 +7,9 @@
 	<File name="include/admin/cmd_bindings/cmd_h.h" open="0" top="0" tabpos="0">
 		<Cursor position="439" topLine="2" />
 	</File>
+	<File name="include/admin/cmd_bindings/cmd_m.h" open="0" top="0" tabpos="0">
+		<Cursor position="202" topLine="0" />
+	</File>
 	<File name="include/admin/cmd_bindings/cmd_s.h" open="0" top="0" tabpos="0">
 		<Cursor position="98" topLine="0" />
 	</File>
@@ -14,28 +17,31 @@
 		<Cursor position="259" topLine="0" />
 	</File>
 	<File name="include/color_out.h" open="0" top="0" tabpos="0">
-		<Cursor position="510" topLine="11" />
+		<Cursor position="1003" topLine="44" />
+	</File>
+	<File name="include/core_classes.h" open="0" top="0" tabpos="0">
+		<Cursor position="254" topLine="0" />
 	</File>
 	<File name="include/fdmn.h" open="0" top="0" tabpos="5">
 		<Cursor position="239" topLine="0" />
 	</File>
-	<File name="include/file_management/fs_util.h" open="1" top="0" tabpos="6">
-		<Cursor position="1292" topLine="57" />
+	<File name="include/file_management/fs_util.h" open="0" top="0" tabpos="5">
+		<Cursor position="3462" topLine="128" />
 	</File>
-	<File name="include/file_management/mounts.h" open="1" top="0" tabpos="4">
-		<Cursor position="596" topLine="3" />
+	<File name="include/file_management/mounts.h" open="1" top="0" tabpos="2">
+		<Cursor position="822" topLine="12" />
 	</File>
 	<File name="include/logging.h" open="0" top="0" tabpos="0">
 		<Cursor position="1106" topLine="21" />
 	</File>
 	<File name="include/net_interface.h" open="0" top="0" tabpos="0">
-		<Cursor position="884" topLine="27" />
+		<Cursor position="884" topLine="57" />
 	</File>
 	<File name="include/network/packets.h" open="0" top="0" tabpos="0">
 		<Cursor position="0" topLine="6" />
 	</File>
 	<File name="include/server_core.h" open="0" top="0" tabpos="0">
-		<Cursor position="1542" topLine="22" />
+		<Cursor position="614" topLine="10" />
 	</File>
 	<File name="include/settings.h" open="0" top="0" tabpos="0">
 		<Cursor position="731" topLine="0" />
@@ -43,8 +49,8 @@
 	<File name="include/settings/default_settings.h" open="0" top="0" tabpos="0">
 		<Cursor position="437" topLine="0" />
 	</File>
-	<File name="include/utility.h" open="1" top="0" tabpos="2">
-		<Cursor position="2452" topLine="96" />
+	<File name="include/utility.h" open="1" top="0" tabpos="5">
+		<Cursor position="2440" topLine="57" />
 	</File>
 	<File name="settings.ini" open="0" top="0" tabpos="0">
 		<Cursor position="123" topLine="0" />
@@ -53,10 +59,10 @@
 		<Cursor position="101" topLine="0" />
 	</File>
 	<File name="src/admin/cmd_bindings/cmd_m.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1090" topLine="21" />
+		<Cursor position="1351" topLine="30" />
 	</File>
 	<File name="src/admin/cmd_bindings/cmd_s.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="895" topLine="61" />
+		<Cursor position="1254" topLine="42" />
 	</File>
 	<File name="src/admin/interface.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="570" topLine="0" />
@@ -64,14 +70,17 @@
 	<File name="src/color_out.c" open="0" top="0" tabpos="0">
 		<Cursor position="2428" topLine="0" />
 	</File>
+	<File name="src/core_classes.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="0" topLine="0" />
+	</File>
 	<File name="src/fdmn.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="1114" topLine="49" />
 	</File>
-	<File name="src/file_management/fs_util.cpp" open="1" top="1" tabpos="5">
-		<Cursor position="2724" topLine="235" />
+	<File name="src/file_management/fs_util.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="8551" topLine="359" />
 	</File>
-	<File name="src/file_management/mounts.cpp" open="1" top="0" tabpos="3">
-		<Cursor position="1397" topLine="45" />
+	<File name="src/file_management/mounts.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="2659" topLine="35" />
 	</File>
 	<File name="src/logging.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="1591" topLine="30" />
@@ -83,12 +92,12 @@
 		<Cursor position="323" topLine="0" />
 	</File>
 	<File name="src/server_core.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1364" topLine="60" />
+		<Cursor position="2015" topLine="67" />
 	</File>
 	<File name="src/settings.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="219" topLine="0" />
 	</File>
-	<File name="src/utility.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="5262" topLine="0" />
+	<File name="src/utility.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="280" topLine="195" />
 	</File>
 </CodeBlocks_layout_file>

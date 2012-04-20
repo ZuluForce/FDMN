@@ -69,8 +69,14 @@ bool cMountSys::newMount(string location) {
 	cout << "Finished indexing mount " << newID << endl;
 	//cout << "There are " << mounts[newID]->numberFiles(FT_REG) << " files in the new mount" << endl;
 	cout << "Mount " << newID << " has " << cMountInfo::getSubFiles(*mount);
-	cout << " in " << cMountInfo::getSubDirs(*mount) << " directories" << endl;
+	cout << " files in " << cMountInfo::getSubDirs(*mount) << " directories" << endl;
 	cout << "The new mount contains " << cMountInfo::getSubSize(*mount) << " bytes of data" << endl;
+
+	return true;
+}
+
+bool cMountSys::newMount(filesystem::path& location) {
+	cout << "Can't process now" << endl;
 
 	return false;
 }
@@ -84,6 +90,26 @@ void cMountSys::printMounts() {
 			cout << "Mount " << i << ": " << mounts[i]->getPath() << endl;
 		}
 	}
+
+	return;
+}
+
+void cMountSys::status(stringstream& stream) {
+	if ( mountIDs.ID_recall() != -1) {
+		stream << "Mount System:" << endl;
+
+		for ( int i = 0; i < mounts.size(); ++i) {
+			if ( mounts[i] != NULL )
+				stream << "\tMount " << i << ": " << mounts[i]->getPath() << endl;
+		}
+
+		stream << endl;
+	}
+
+	return;
+}
+
+void cMountSys::cleanup() {
 
 	return;
 }

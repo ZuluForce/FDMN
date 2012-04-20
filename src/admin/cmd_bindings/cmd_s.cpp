@@ -50,6 +50,9 @@ void server_status(string cmd) {
 				sflags |= SF_VERSION;
 				break;
 
+			case 'm':
+				sflags |= SF_MOUNTS;
+
 			default:
 				cerr << "Invalid argument(" << cmd[opt_index + 1];
 				cerr << ") to status command" << endl;
@@ -86,5 +89,19 @@ void eval_cmd_s(string cmd) {
 	cerr << "Invalid Command: ";
 	cerr << cmd.substr(0,cmd.find_first_of(' '));
 	cerr << endl;
+	return;
+}
+
+void print_help_s() {
+	cout << "**------ S ------**" << endl;
+	cout << "status - Display status information about the server" << endl;
+	cout << "\t-a: Print all status info and log" << endl;
+	cout << "\t-l: Export status command results to the log file as well" << endl;
+	cout << "\t-n: Network status" << endl;
+	cout << "\t-s: Settings information" << endl;
+	cout << "\t-u: Server uptime" << endl;
+	cout << "\t-v: Version information" << endl;
+	cout << "\t-m: Show mounts" << endl;
+
 	return;
 }

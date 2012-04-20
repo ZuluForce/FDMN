@@ -92,6 +92,17 @@ void eval_input(string input) {
 	cout << "First char of input: " << first_char << endl;
 	#endif
 
+//
+	if ( !input.compare("help") ) {
+		print_help_a();
+		print_help_c();
+		print_help_l();
+		print_help_m();
+		print_help_s();
+		print_help_t();
+		return;
+	}
+
     switch ( first_char ) {
     	EVAL_CASE('a',a);
     	EVAL_CASE('c',c);

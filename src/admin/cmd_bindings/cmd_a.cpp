@@ -20,3 +20,9 @@ void eval_cmd_a(string cmd) {
 
     return;
 }
+
+void print_help_a() {
+	cout << "**------ A ------**" << endl;
+	cout << "admin - Does nothing. Was originally a test." << endl;
+	return;
+};

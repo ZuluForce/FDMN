@@ -41,10 +41,18 @@ void mount_cmd(string cmd) {
 	}
 	if ( OPTION_SET(mapOptions,'p','-') ) {
 		_mountsys->printMounts();
+		clearFlags(mapOptions);
 		return;
 	}
 
-	_mountsys->newMount(location);
+	if ( location.length() > 0 && location[0] == '~') {
+		boost::filesystem::path fullPath = boost::filesystem::current_path();
+		fullPath /= location.substr(1);
+
+		_mountsys->newMount(fullPath);
+	} else {
+		_mountsys->newMount(location);
+	}
 
 	clearFlags(mapOptions);
 	return;
@@ -59,6 +67,17 @@ void eval_cmd_m(string cmd) {
 	}
 
 	cerr << "Invalid command: " << cmd_name;
+
+	return;
+}
+
+void print_help_m() {
+	cout << "**----- M ------**" << endl;
+	cout << "mount - Mount a directory" << endl;
+	cout << "\t-l \"location\": Location of directory to mount" << endl;
+	cout << "\t-m #: Specify your own mount # to be referenced later" << endl;
+	cout << "\t-n \"name\": Give a human readable name for the new mount" << endl;
+	cout << "\t-r: Specify this as a mount on a remote machine. Doesn't currently do anything" << endl;
 
 	return;
 }

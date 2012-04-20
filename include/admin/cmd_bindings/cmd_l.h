@@ -10,5 +10,6 @@
 #include "settings.h"
 
 void eval_cmd_l(string cmd);
+void print_help_l();
 
 #endif // CMD_L_H_INCLUDED

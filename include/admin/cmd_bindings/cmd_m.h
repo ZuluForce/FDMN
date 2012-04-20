@@ -8,9 +8,12 @@
 #include "utility.h"
 #include "file_management/mounts.h"
 
+#include "boost/filesystem.hpp"
+
 using namespace std;
 
 void eval_cmd_m(string cmd);
+void print_help_m();
 
 class mountOptions: public OptionsBase {
 	public:

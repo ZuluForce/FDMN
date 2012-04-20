@@ -6,5 +6,6 @@
 #include "server_core.h"
 
 void eval_cmd_s(string cmd);
+void print_help_s();
 
 #endif // CMD_S_H_INCLUDED

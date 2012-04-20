@@ -15,5 +15,6 @@
 using namespace std;
 
 void eval_cmd_c(string cmd);
+void print_help_c();
 
 #endif // CMD_C_H_INCLUDED

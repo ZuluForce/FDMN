@@ -20,3 +20,10 @@ void eval_cmd_t(string cmd) {
 
     return;
 }
+
+void print_help_t() {
+	cout << "**------ T ------**" << endl;
+	cout << "timestamp - Toggle the timestamp on the log file" << endl;
+
+	return;
+}

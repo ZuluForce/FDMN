@@ -9,5 +9,6 @@
 using namespace std;
 
 void eval_cmd_a(string cmd);
+void print_help_a();
 
 #endif // CMD_A_H_INCLUDED
