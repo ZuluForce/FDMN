@@ -31,8 +31,9 @@ void eval_cmd_c(string cmd) {
 
 
 void print_help_c() {
-	cout << "**------ C ------**" << endl;
+	cout << "**--------| C |--------**" << endl;
 	cout << "clear - Clearn the terminal screen" << endl;
+	cout << endl;
 
 	return;
 }

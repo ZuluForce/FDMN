@@ -22,8 +22,9 @@ void eval_cmd_t(string cmd) {
 }
 
 void print_help_t() {
-	cout << "**------ T ------**" << endl;
+	cout << "**--------| T |--------**" << endl;
 	cout << "timestamp - Toggle the timestamp on the log file" << endl;
+	cout << endl;
 
 	return;
 }

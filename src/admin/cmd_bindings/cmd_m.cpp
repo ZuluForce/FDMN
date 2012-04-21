@@ -72,12 +72,13 @@ void eval_cmd_m(string cmd) {
 }
 
 void print_help_m() {
-	cout << "**----- M ------**" << endl;
+	cout << "**--------| M |--------**" << endl;
 	cout << "mount - Mount a directory" << endl;
 	cout << "\t-l \"location\": Location of directory to mount" << endl;
 	cout << "\t-m #: Specify your own mount # to be referenced later" << endl;
 	cout << "\t-n \"name\": Give a human readable name for the new mount" << endl;
-	cout << "\t-r: Specify this as a mount on a remote machine. Doesn't currently do anything" << endl;
+	cout << "\t-r: Specify this as a mount on a remote machine" << endl;
+	cout << endl;
 
 	return;
 }

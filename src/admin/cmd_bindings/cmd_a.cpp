@@ -22,7 +22,8 @@ void eval_cmd_a(string cmd) {
 }
 
 void print_help_a() {
-	cout << "**------ A ------**" << endl;
+	cout << "**--------| A |--------**" << endl;
 	cout << "admin - Does nothing. Was originally a test." << endl;
+	cout << endl;
 	return;
 };

@@ -33,8 +33,9 @@ void eval_cmd_l(string cmd) {
 }
 
 void print_help_l() {
-	cout << "**------ L ------**" << endl;
+	cout << "**--------| L |--------**" << endl;
 	cout << "logmonitor - Start the log file monitor in a separate terminal" << endl;
+	cout << endl;
 
 	return;
 }

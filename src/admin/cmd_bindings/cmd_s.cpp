@@ -93,7 +93,7 @@ void eval_cmd_s(string cmd) {
 }
 
 void print_help_s() {
-	cout << "**------ S ------**" << endl;
+	cout << "**--------| S |--------**" << endl;
 	cout << "status - Display status information about the server" << endl;
 	cout << "\t-a: Print all status info and log" << endl;
 	cout << "\t-l: Export status command results to the log file as well" << endl;
@@ -102,6 +102,7 @@ void print_help_s() {
 	cout << "\t-u: Server uptime" << endl;
 	cout << "\t-v: Version information" << endl;
 	cout << "\t-m: Show mounts" << endl;
+	cout << endl;
 
 	return;
 }

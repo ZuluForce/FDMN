@@ -1,9 +1,12 @@
 #ifndef INIREADER_H_INCLUDED
 #define INIREADER_H_INCLUDED
 
+/** @file */
+
 #include <stdlib.h>
 #include <string>
 #include <map>
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -20,29 +23,15 @@ typedef map<string,KeyMap> SectionMap;
 typedef map<string,string> DefaultKeyMap;
 typedef map<string,DefaultKeyMap> DefaultMap;
 
-/* Option masks for INIReader */
-#define MASK(x) (1 << x)        //Puts the bit in the correct location for the mask
-#define INI_ALL = 0xFFFFFFFF;
+#define STR(x) #x
+#define EXTRACT(type,sec,opt) settings.extractValue<type>(STR(sec),STR(opt))
+#define EXTRACTP(type,sec,opt) settings->extractValue<type>(STR(sec),STR(opt))
+#define EXTRACT_(obj,type,sec,opt) settings.extractValue<type>(STR(sec),STR(opt))
+#define EXTRACTP_(obj,type,sec,opt) settings->extractValue<type>(STR(sec),STR(opt))
 
-typedef enum {
-    INI_STD = 0,
-    INI_LOWER,          //All strings are converted to lower case
-    INI_IGNORE_COMM,    //Does not save any comments, can save small time if there are a lot
-    INI_IGNORE_SEC      //Ignores section headers, puts everything into the same category
-
-} INI_OPTIONS;
-
-typedef enum {
-    STD_MASK = MASK(INI_STD),
-    LOWER_MASK =  MASK(INI_LOWER),
-    IGNORE_COMM_MASK = MASK(INI_IGNORE_COMM),
-    IGNORE_SEC_MASK = MASK(INI_IGNORE_SEC),
-    IGNORE_ALL_MASK = MASK(INI_IGNORE_COMM) |
-                        MASK(INI_IGNORE_SEC)
-}OPTION_MASKS;
-
+/** Struct for holding a single settings key and its value */
 struct KeyRecord {
-    private:
+    protected:
         string value;
         string comment;
 
@@ -50,11 +39,11 @@ struct KeyRecord {
 
     public:
         /* Initializers */
-        KeyRecord(string value);
-        KeyRecord(string,string,int);
+        KeyRecord(const string value);
+        KeyRecord(const string, const string,int);
 
         /* Setters */
-        void setValue(string);
+        void setValue(const string);
         void setComment(string);
         void setPosPtr(int);
 
@@ -62,15 +51,28 @@ struct KeyRecord {
         string& getValue();
         string& getComment();
         int getPosPtr();
+
+        string operator() (const KeyRecord& record) {
+        	return value;
+        }
 };
 
+/** Class for parsing and storing contents of .ini files
+ *
+ *	This was taken from another project I was working on with
+ *	some small addiitions (overriding settings). There is a lot
+ *	here and because it is not central to this project it won't
+ *	be documented in detail.
+ */
 class INIReader {
-    private:
+    protected:
         fstream ini_file;
 
         int get_pointer;    //Stream pointer to current get line
         int put_pointer;    //Stream pointer to current put line
         int lineNumber;
+
+        bool overwriteMode;
 
         string ini_name;
         string currLine;   //Current line being read/parsed
@@ -90,6 +92,9 @@ class INIReader {
 
         DefaultKeyMap *def_temp_map;
 
+		//These sections do not allow settings to be overwritten
+        vector<string> noOverwriteSection;
+
         //Loads the sections and (key,value) pairs from the ini file
         void parse_ini();
 
@@ -107,12 +112,17 @@ class INIReader {
     public:
         INIReader(/*Uint8 flags = 0x0000*/);
         INIReader(string filename /*, Uint8 flags = 0x0000 */);
-        bool load_ini(string filename, bool auto_parse = true);
+        bool load_ini(string filename, bool auto_parse = true, bool overwrite = true);
         bool loaded(); //True = there is a .ini loaded   False = none is loaded or there was an error loading one
         bool exists(const string& section, const string& key);
 
         /* Manipulators */
         void addDefault(const string& section, const string& key, const string& value);
+
+        void addOverwriteException(const string& section);
+
+        //Returns true if the value was overriden. False if it doesn't exist.
+        bool overWriteOp(const string& section, const string& key, const string& value);
         template<class T> T extractValue(const string& section, const string& key);
         template<class T> T extractDefault(const string& section, const string& key);
 
@@ -133,12 +143,33 @@ T INIReader::extractValue(const string& section, const string& key) {
 template <class T>
 T INIReader::extractDefault(const string& section, const string& key) {
 	stringstream stream;
-	stream << getDefault(section,key);
+	stream << getDefault(section, key);
 
 	T out;
 	stream >> out;
 
 	return out;
+}
+
+/* Without the attribute the compiler thinks it is unused because it depends
+ * on the templated function findInVector being used with string& types.
+ */
+__attribute__((unused)) static bool strEq(const string& s1, const string& s2) {
+	if ( s1.compare(s2) == 0 ) return true;
+
+	return false;
+}
+
+//Find item in vector using comp_fn for comparison. Only returns true/false, not location
+template<class T>
+bool findInVector(vector<T>& vec, const T& item, bool (*comp_fn) (const T&,const T&)) {
+	typename std::vector<T>::iterator it;
+
+	for ( it = vec.begin(); it != vec.end(); ++it ) {
+		if ( comp_fn(*it, item) ) return true;
+	}
+
+	return false;
 }
 
 #endif // INIREADER_H_INCLUDED
